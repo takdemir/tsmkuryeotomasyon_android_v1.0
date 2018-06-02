@@ -1,11 +1,11 @@
 /**
- * Created by taner on 14.11.2016.
+ * Created by taner on 02.06.2018.
  */
 
 $(document).ready(function () {
 
     $('#myTabs a').click(function (e) {
-        e.preventDefault()
+        e.preventDefault();
         $(this).tab('show')
     })
 
@@ -21,7 +21,7 @@ document.addEventListener("deviceready",onDeviceReadyForMyPanel,false);
 function onDeviceReadyForMyPanel(){
 
     <!--Initializing Push Notification-->
-    var push = PushNotification.init({
+    let push = PushNotification.init({
 
         <!--Setting attributes for Android, IOS and Windows-->
         android: {
@@ -41,7 +41,7 @@ function onDeviceReadyForMyPanel(){
     });
     push.on('notification', function(data) {
 
-        if(window.localStorage.getItem("kuryeID")!="" && window.localStorage.getItem("kuryeID")>0) {
+        if(window.localStorage.getItem("kuryeID")!=="" && window.localStorage.getItem("kuryeID")>0) {
             mypanel.getjobsOnkurye(window.localStorage.getItem("kuryeID"));
             mypanel.getdeliveredjobsOnkurye(window.localStorage.getItem("kuryeID"));
         }
@@ -53,8 +53,8 @@ function onDeviceReadyForMyPanel(){
             'Tamam'                  // buttonName
         );
 
-        var beepsound = common.getpreferencebyname('beepsound');
-        var vibratetime = common.getpreferencebyname('vibratetime');
+        let beepsound = common.getpreferencebyname('beepsound');
+        let vibratetime = common.getpreferencebyname('vibratetime');
         navigator.notification.beep(beepsound);
         navigator.notification.vibrate(vibratetime);
 
@@ -67,18 +67,18 @@ function onDeviceReadyForMyPanel(){
 
 
 
-    var callbackFn = function (location) {
+    let callbackFn = function (location) {
 
-        var regid = window.localStorage.getItem("regid");
-        var kuryeID = window.localStorage.getItem("kuryeID");
-        var latitude = location.latitude;
-        var longitude = location.longitude;
+        let regid = window.localStorage.getItem("regid");
+        let kuryeID = window.localStorage.getItem("kuryeID");
+        let latitude = location.latitude;
+        let longitude = location.longitude;
 
 
 
         if (latitude != "" && longitude != "") {
 
-            var data = {"regid": regid, "kuryeID": kuryeID, "latitude": latitude, "longitude": longitude}
+            let data = {"regid": regid, "kuryeID": kuryeID, "latitude": latitude, "longitude": longitude}
             <!--Passing those values to the insertregid.php file-->
             $.ajax({
                 url: window.localStorage.getItem("ipurl") + "/insertposition",
@@ -135,32 +135,12 @@ function onDeviceReadyForMyPanel(){
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
 
 
 
 
-var mypanel={
+let mypanel={
 
     checklogin: function () {
 
@@ -177,7 +157,7 @@ var mypanel={
     },
     getjobsOnkurye: function (kuryeID) {
 
-        var data={"kuryeID":kuryeID};
+        let data={"kuryeID":kuryeID};
 
         $.ajax({
             url: window.localStorage.getItem("ipurl")+"/getjobsonkurye",
@@ -194,26 +174,26 @@ var mypanel={
 
 
 
-                    if(data.data!=""){
+                    if(data.data!==""){
 
-                        var table="";
+                        let table="";
 
 
 
-                        var i = 1;
-                        var y = 0;
+                        let i = 1;
+                        let y = 0;
                         $.each(data.data, function (k,v) {
 
-                            var accordionOpen="";
-                            if(i==1){
+                            let accordionOpen="";
+                            if(i===1){
                                accordionOpen="";
                             }
 
-                            var headId="heading"+i;
-                            var collapseId="collapse"+i;
+                            let headId="heading"+i;
+                            let collapseId="collapse"+i;
 
-                                var color = "panel-default";
-                                if(v.alimsaati!=""){color = "panel-warning";}
+                            let color = "panel-default";
+                                if(v.alimsaati!==""){color = "panel-warning";}
                                 table+='<div class="panel '+color+'">'+
 
 
@@ -279,9 +259,8 @@ var mypanel={
 
                         });
 
-                        $("#accordion").html("");
 
-                        $("#accordion").html(table);
+                        $("#accordion").html("").html(table);
 
                         $("#uzerimdekiisCount").html(y);
 
@@ -296,7 +275,7 @@ var mypanel={
     },
     getdeliveredjobsOnkurye: function (kuryeID) {
 
-        var data={"kuryeID":kuryeID};
+        let data={"kuryeID":kuryeID};
 
         $.ajax({
             url: window.localStorage.getItem("ipurl")+"/getdeliveredjobsonkurye",
@@ -313,23 +292,23 @@ var mypanel={
 
 
 
-                if(data.data!=""){
+                if(data.data!==""){
 
-                    var table="";
+                    let table="";
 
 
 
-                    var i = 1;
-                    var y = 0;
+                    let i = 1;
+                    let y = 0;
                     $.each(data.data, function (k,v) {
 
-                        var accordionOpen="";
-                        if(i==1){
+                        let accordionOpen="";
+                        if(i===1){
                             accordionOpen="";
                         }
 
-                        var headId="heading"+(i+100);
-                        var collapseId="collapse"+(i+100);
+                        let headId="heading"+(i+100);
+                        let collapseId="collapse"+(i+100);
 
 
 
@@ -384,9 +363,8 @@ var mypanel={
 
                     });
 
-                    $("#accordion2").html("");
 
-                    $("#accordion2").html(table);
+                    $("#accordion2").html("").html(table);
 
                     $("#teslimedilenisCount").html(y);
 
@@ -401,9 +379,9 @@ var mypanel={
     },
     executeonjob: function (jobID,executetype,eq) {
 
-        if(executetype=='alindi') {
+        if(executetype==='alindi') {
 
-            var data = {"islem": jobID, "action": "alındı"};
+            let data = {"islem": jobID, "action": "alındı"};
 
             $.ajax({
                 url: window.localStorage.getItem("ipurl") + "/registerislemlerikurye",
@@ -434,9 +412,9 @@ var mypanel={
 
         }else{
 
-            var teslimEdilen=$("input[name='teslimEdilen']:eq(" + eq + ")").val();
-            var teslimsaati=$("input[name='teslimSaati']:eq(" + eq + ")").val();
-            if(teslimEdilen!="") {
+            let teslimEdilen=$("input[name='teslimEdilen']:eq(" + eq + ")").val();
+            let teslimsaati=$("input[name='teslimSaati']:eq(" + eq + ")").val();
+            if(teslimEdilen!=="") {
                 var data = {
                     "islem": jobID,
                     "action": "teslim",
@@ -479,7 +457,7 @@ var mypanel={
     },
     getjobback: function (jobID) {
 
-        var data = {
+        let data = {
             "id": jobID
         };
 
@@ -512,49 +490,49 @@ var mypanel={
     },
     getteslimsaati: function (eq) {
 
-        var date=new Date();
-        var day=date.getDate();
-        var month=date.getMonth()+1;
+        let date=new Date();
+        let day=date.getDate();
+        let month=date.getMonth()+1;
         if(month<10){
             month="0"+month;
         }
-        var year=date.getFullYear();
-        var hour=date.getHours();
+        let year=date.getFullYear();
+        let hour=date.getHours();
         if(hour<10){
             hour="0"+hour;
         }
-        var minute=date.getMinutes();
+        let minute=date.getMinutes();
         if(minute<10){
             minute="0"+minute;
         }
-        var second=date.getSeconds();
+        let second=date.getSeconds();
         if(second<10){
             second="0"+second;
         }
-        var teslimSaati=day+"-"+month+"-"+year+" "+hour+":"+minute+":"+second;
+        let teslimSaati=day+"-"+month+"-"+year+" "+hour+":"+minute+":"+second;
         $("input[name='teslimSaati']:eq("+eq+")").val(teslimSaati);
     },
     setlocations: function () {
 
-        var regid = window.localStorage.getItem("regid");
-        var kuryeID = window.localStorage.getItem("kuryeID");
+        let regid = window.localStorage.getItem("regid");
+        let kuryeID = window.localStorage.getItem("kuryeID");
 
-        if(kuryeID!="" && kuryeID>0) {
+        if(kuryeID!=="" && kuryeID>0) {
 
                 navigator.geolocation.getCurrentPosition(function (position) {
-                    var pos = {
+                    let pos = {
                         lat: position.coords.latitude,
                         lng: position.coords.longitude
                     };
 
-                    var latitude = position.coords.latitude;
-                    var longitude = position.coords.longitude;
+                    let latitude = position.coords.latitude;
+                    let longitude = position.coords.longitude;
 
 
 
-                    if (latitude != "" && longitude != "") {
+                    if (latitude !=="" && longitude !== "") {
 
-                        var data = {"regid": regid, "kuryeID": kuryeID, "latitude": latitude, "longitude": longitude}
+                        let data = {"regid": regid, "kuryeID": kuryeID, "latitude": latitude, "longitude": longitude}
                         <!--Passing those values to the insertregid.php file-->
                         $.ajax({
                             url: window.localStorage.getItem("ipurl") + "/insertposition",
@@ -600,25 +578,25 @@ var mypanel={
     },
     setlocationswithwatch: function () {
 
-        var regid = window.localStorage.getItem("regid");
-        var kuryeID = window.localStorage.getItem("kuryeID");
+        let regid = window.localStorage.getItem("regid");
+        let kuryeID = window.localStorage.getItem("kuryeID");
 
-        if(kuryeID!="" && kuryeID>0) {
+        if(kuryeID!=="" && kuryeID>0) {
 
             navigator.geolocation.watchPosition(function (position) {
-                var pos = {
+                let pos = {
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 };
 
-                var latitude = position.coords.latitude;
-                var longitude = position.coords.longitude;
+                let latitude = position.coords.latitude;
+                let longitude = position.coords.longitude;
 
 
 
-                if (latitude != "" && longitude != "") {
+                if (latitude !== "" && longitude !== "") {
 
-                    var data = {"regid": regid, "kuryeID": kuryeID, "latitude": latitude, "longitude": longitude}
+                    let data = {"regid": regid, "kuryeID": kuryeID, "latitude": latitude, "longitude": longitude}
                     <!--Passing those values to the insertregid.php file-->
                     $.ajax({
                         url: window.localStorage.getItem("ipurl") + "/insertposition",
@@ -681,26 +659,26 @@ function onPause() {
             backgroundGeolocation.getLocations(function (locations) {
                 //backgroundGeolocation.showLocationSettings();
 
-                var a= "1";
+                let a= "1";
                 locations.forEach(function (loc) {
                     //if ((now - loc.time) <= sameDayDiffInMillis) {
 
                     //}
                     a +="2";
                 });
-                var now = Date.now();
-                var sameDayDiffInMillis = 24 * 900 * 1000;
+                let now = Date.now();
+                let sameDayDiffInMillis = 24 * 900 * 1000;
                 //common.showToast(a,'long','center',0);
-                var regid = window.localStorage.getItem("regid");
-                var kuryeID = window.localStorage.getItem("kuryeID");
-                var latitude = "-122.084";
-                var longitude = "37.889900";
+                let regid = window.localStorage.getItem("regid");
+                let kuryeID = window.localStorage.getItem("kuryeID");
+                let latitude = "-122.084";
+                let longitude = "37.889900";
 
 
 
-                if (latitude != "" && longitude != "") {
+                if (latitude !== "" && longitude !== "") {
 
-                    var data = {"regid": regid, "kuryeID": kuryeID, "latitude": latitude, "longitude": longitude,"locations":locations}
+                    let data = {"regid": regid, "kuryeID": kuryeID, "latitude": latitude, "longitude": longitude,"locations":locations}
                     <!--Passing those values to the insertregid.php file-->
                     /*$.ajax({
                         url: window.localStorage.getItem("ipurl") + "/insertposition",
@@ -737,7 +715,7 @@ function onPause() {
 
 
 
-if(window.localStorage.getItem("kuryeID")!="" && window.localStorage.getItem("kuryeID")>0) {
+if(window.localStorage.getItem("kuryeID")!=="" && window.localStorage.getItem("kuryeID")>0) {
     mypanel.getjobsOnkurye(window.localStorage.getItem("kuryeID"));
     mypanel.getdeliveredjobsOnkurye(window.localStorage.getItem("kuryeID"));
 
