@@ -34,11 +34,11 @@
     <feature name="LocationServices">
         <param name="android-package" value="fr.louisbl.cordova.locationservices.CordovaLocationServices" />
     </feature>
-    <name>Motorlu Kurye-tbmsoft</name>
+    <name>Motorlu Kurye-kuryeotomasyon.com</name>
     <description>
-        Kurye Otomasyon Sistemleri
+        Kurye Otomasyon Sistemleri V3
     </description>
-    <author email="taneryzb@hotmail.com" href="https://tbmsoft.xyz">
+    <author email="taneryzb@hotmail.com" href="https://kuryeotomasyon.com">
         Kurye Otomasyon Sistemleri
     </author>
     <content src="login.html" />

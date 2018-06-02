@@ -1,10 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
 <widget id="com.tbmyazilim.www" version="1.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-    <name>Motorlu Kurye-tbmsoft</name>
+    <name>Motorlu Kurye-kuryeotomasyon.com</name>
     <description>
-        Kurye Otomasyon Sistemleri
+        Kurye Otomasyon Sistemleri V3
     </description>
-    <author email="taneryzb@hotmail.com" href="https://tbmsoft.xyz">
+    <author email="taneryzb@hotmail.com" href="https://kuryeotomasyon.com">
         Kurye Otomasyon Sistemleri
     </author>
     <content src="login.html" />
@@ -21,11 +21,11 @@
     <platform name="android">
         <allow-intent href="market:*" />
         <preference name="android-minSdkVersion" value="14" />
-        <icon density="mdpi" src="www/res/icon/android/mipmap-mdpi/Courier-24848.png" />
-        <icon density="hdpi" src="www/res/icon/android/mipmap-hdpi/Courier-27272.png" />
-        <icon density="xhdpi" src="www/res/icon/android/mipmap-xhdpi/Courier-29696.png" />
-        <icon density="xxhdpi" src="www/res/icon/android/mipmap-xxhdpi/Courier-2144144.png" />
-        <icon density="xxxhdpi" src="www/res/icon/android/mipmap-xxxhdpi/Courier-2192192.png" />
+        <icon density="mdpi" src="www/res/icon/android/mipmap-mdpi/kos.png" />
+        <icon density="hdpi" src="www/res/icon/android/mipmap-hdpi/kos.png" />
+        <icon density="xhdpi" src="www/res/icon/android/mipmap-xhdpi/kos.png" />
+        <icon density="xxhdpi" src="www/res/icon/android/mipmap-xxhdpi/kos.png" />
+        <icon density="xxxhdpi" src="www/res/icon/android/mipmap-xxxhdpi/kos.png" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
