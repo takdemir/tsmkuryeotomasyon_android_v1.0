@@ -160,7 +160,7 @@ let mypanel={
         let data={"kuryeID":kuryeID};
 
         $.ajax({
-            url: window.localStorage.getItem("ipurl")+"/getcourierworkons",
+            url: window.localStorage.getItem("ipurl")+"/getcourierworkonsforandroid",
             type: "POST",
             data: JSON.stringify(data),
             dataType: "json",
@@ -343,7 +343,7 @@ let mypanel={
         let data={"courierId":kuryeID};
 
         $.ajax({
-            url: window.localStorage.getItem("ipurl")+"/getcourierdeliveredworks",
+            url: window.localStorage.getItem("ipurl")+"/getcourierdeliveredworksforandroid",
             type: "POST",
             data: JSON.stringify(data),
             dataType: "json",
@@ -507,7 +507,7 @@ let mypanel={
             let data = {"tsmOrderId": jobID};
 
             $.ajax({
-                url: window.localStorage.getItem("ipurl") + "/setpickedup",
+                url: window.localStorage.getItem("ipurl") + "/setpickedupforandroid",
                 type: "POST",
                 data: JSON.stringify(data),
                 dataType: "json",
@@ -543,7 +543,7 @@ let mypanel={
             if(deliveredName!=='' && deliveredName!==null) {
 
                 $.ajax({
-                    url: window.localStorage.getItem("ipurl") + "/setbackworkdeliveredname",
+                    url: window.localStorage.getItem("ipurl") + "/setbackworkdeliverednameforandroid",
                     type: "POST",
                     data: JSON.stringify(data),
                     dataType: "json",
@@ -584,7 +584,7 @@ let mypanel={
                 };
 
                 $.ajax({
-                    url: window.localStorage.getItem("ipurl") + "/setorderdelivered",
+                    url: window.localStorage.getItem("ipurl") + "/setorderdeliveredforandroid",
                     type: "POST",
                     data: JSON.stringify(data),
                     dataType: "json",
@@ -623,7 +623,7 @@ let mypanel={
         };
 
         $.ajax({
-            url: window.localStorage.getItem("ipurl") + "/getbackfromdelivered",
+            url: window.localStorage.getItem("ipurl") + "/getbackfromdeliveredforandroid",
             type: "POST",
             data: JSON.stringify(data),
             dataType: "json",
@@ -842,7 +842,7 @@ function onPause() {
                     let data = {"regid": regid, "tsmCourierId": kuryeID, "latitude": latitude, "longitude": longitude,"locations":locations}
                     <!--Passing those values to the insertregid.php file-->
                     /*$.ajax({
-                        url: window.localStorage.getItem("ipurl") + "/insertposition",
+                        url: window.localStorage.getItem("ipurl") + "/setcourierposition",
                         type: "POST",
                         data: JSON.stringify(data),
                         dataType: 'json',

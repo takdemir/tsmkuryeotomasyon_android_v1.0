@@ -121,9 +121,9 @@ let login={
 
                 if(!data.hasError){
 
-                    login.creategcm(data.data.courierDetails.id);
+                    login.creategcm(data.data.id);
 
-                    login.opensession(data.data.courierDetails.id,data.data.courierDetails.name);
+                    login.opensession(data.data.id,data.data.name);
 
                     common.showToast(data.msg,'long','center',0);
 
