@@ -340,10 +340,10 @@ let mypanel={
     },
     getdeliveredjobsOnkurye: function (kuryeID) {
 
-        let data={"kuryeID":kuryeID};
+        let data={"courierId":kuryeID};
 
         $.ajax({
-            url: window.localStorage.getItem("ipurl")+"/getdeliveredjobsonkurye",
+            url: window.localStorage.getItem("ipurl")+"/getcourierdeliveredworks",
             type: "POST",
             data: JSON.stringify(data),
             dataType: "json",
@@ -376,6 +376,66 @@ let mypanel={
                         let collapseId="collapse"+(i+100);
 
 
+                        let pickupCustomerName = "";
+                        let pickupCustomerDistrict = "";
+                        let pickupCustomerAddress = "";
+                        let pickupCustomerPhone = "";
+                        let pickupCustomerNote = "";
+
+                        if(v.tsmf2===null || v.tsmf2==='' || v.isF2Fake){
+                            pickupCustomerName= v.tsmf1.name;
+                            pickupCustomerDistrict = v.tsmf1.tsmdistrict.districtName;
+                            pickupCustomerAddress = v.tsmf1.address;
+                            pickupCustomerPhone = v.tsmf1.phone;
+                            pickupCustomerNote = v.tsmf1.note;
+                        }else{
+                            pickupCustomerName= v.tsmf2.name;
+                            pickupCustomerDistrict = v.tsmf2.tsmdistrict.districtName;
+                            pickupCustomerAddress = v.tsmf2.address;
+                            pickupCustomerPhone = v.tsmf2.phone;
+                            pickupCustomerNote = v.tsmf2.note;
+                        }
+
+                        let paymentStatusOriginal = v.tsmcustomerinvoices.paymentStatus;
+                        let paymentStatus = 'Ödendi';
+                        if(paymentStatusOriginal==='Unpaid'){
+                            paymentStatus = 'Ödenmedi';
+                        }
+
+                        let deliverToCourierTimeOriginal = v.deliverToCourierTime;
+                        let deliverToCourierTime = "";
+                        let explodeTime = deliverToCourierTimeOriginal.split(' ');
+                        deliverToCourierTime = explodeTime[1];
+
+
+                        let pickedupTimeOriginal = v.pickupDate;
+                        let pickedUpTime = "";
+                        let explodePickedupTime = pickedupTimeOriginal.split(' ');
+                        pickedUpTime = explodePickedupTime[1];
+
+                        let deliveredTimeOriginal = v.deliveredDate;
+                        let deliveredTime = "";
+                        let explodeDeliveredTime = deliveredTimeOriginal.split(' ');
+                        deliveredTime = explodeDeliveredTime[1];
+
+
+                        let officialName = "-";
+
+                        if(v.tsmf3.tsmadminofficials !== null && v.tsmf3.tsmadminofficials!=="" && Object.keys(v.tsmf3.tsmadminofficials)>0){
+                            $.each(v.tsmf3.tsmadminofficials, function (kk,vv) {
+
+                                officialName += vv.name+'-->'+vv.mobilePhone+'<br>';
+
+                            });
+
+                        }
+
+                        let deliveredPhone = "-";
+                        if(v.tsmf3.mobilePhone!=="" && v.tsmf3.mobilePhone!==null){
+                            deliveredPhone = v.tsmf3.mobilePhone;
+                        }
+
+
 
                         table+='<div class="panel panel-default">'+
 
@@ -393,26 +453,24 @@ let mypanel={
 
                             '<table class="table table-bordered">'+
                             '<tr>'+'<th>Gönderi Nu.:</th>'+'<td>'+v.id+'</td>'+'</tr>'+
-                            '<tr>'+'<th>Al.Kişi</th>'+'<td>'+v.alinankisi+'</td>'+'</tr>'+
-                            '<tr>'+'<th>Al.Semt</th>'+'<td>'+v.alinansemt+'</td>'+'</tr>'+
-                            '<tr>'+'<th>Al.Adres</th>'+'<td>'+v.alinanadres+'</td>'+'</tr>'+
-                            '<tr>'+'<th>Tes.Kisi</th>'+'<td>'+v.teslimkisi+'</td>'+'</tr>'+
-                            '<tr>'+'<th>Tes.Semt</th>'+'<td>'+v.teslimsemt+'</td>'+'</tr>'+
-                            '<tr>'+'<th>Tes.Adres</th>'+'<td>'+v.teslimadres+'</td>'+'</tr>'+
-                            '<tr>'+'<th>Tutar</th>'+'<td>'+v.tutar+' TL</td>'+'</tr>'+
-                            '<tr>'+'<th>İşlem Tipi</th>'+'<td>'+v.islemtipi+'</td>'+'</tr>'+
-                            '<tr>'+'<th>Ödeme</th>'+'<td>'+v.odemedurumu+'</td>'+'</tr>'+
-                            '<tr>'+'<th>Ok.Saati</th>'+'<td>'+v.okumasaati+'</td>'+'</tr>'+
-                            '<tr>'+'<th>Alım Saati</th>'+'<td>'+v.alimsaati+'</td>'+'</tr>'+
-                            '<tr>'+'<th>Teslim Saati</th>'+'<td>'+v.teslimsaati+'</td>'+'</tr>'+
-                            '<tr>'+'<th>Teslim Alan</th>'+'<td>'+v.teslimalan+'</td>'+'</tr>'+
-                            '<tr>'+'<th>Yetkili</th>'+'<td>'+v.yetkiliname+'</td>'+'</tr>'+
-                            '<tr>'+'<th>Yetkili Telefon</th>'+'<td>'+v.yetkilitel+'</td>'+'</tr>'+
-                            '<tr>'+'<th>Not</th>'+'<td>'+v.not+'</td>'+'</tr>'+
-                            '<tr>'+'<th>Kayıt Veren (F1):</th>'+'<td>'+v.kayitveren+'</td>'+'</tr>'+
-                            '<tr>'+'<th>Kayıt Veren Tel.:</th>'+'<td>'+v.kayitverencep+'</td>'+'</tr>'+
-                            '<tr>'+'<th>F2 Tel.:</th>'+'<td>'+v.f2cep+'</td>'+'</tr>'+
-                            '<tr>'+'<th>F3 Tel.:</th>'+'<td>'+v.f3cep+'</td>'+'</tr>'+
+                            '<tr>'+'<th>Al.Kişi</th>'+'<td>'+pickupCustomerName+'</td>'+'</tr>'+
+                            '<tr>'+'<th>Al.Semt</th>'+'<td>'+pickupCustomerDistrict+'</td>'+'</tr>'+
+                            '<tr>'+'<th>Al.Adres</th>'+'<td>'+pickupCustomerAddress+'</td>'+'</tr>'+
+                            '<tr>'+'<th>Tes.Kisi</th>'+'<td>'+v.tsmf3.name+'</td>'+'</tr>'+
+                            '<tr>'+'<th>Tes.Semt</th>'+'<td>'+v.tsmf3.tsmdistrict.districtName+'</td>'+'</tr>'+
+                            '<tr>'+'<th>Tes.Adres</th>'+'<td>'+v.tsmf3.address+'</td>'+'</tr>'+
+                            '<tr>'+'<th>Tutar</th>'+'<td>'+v.tsmcustomerinvoices.total+' TL</td>'+'</tr>'+
+                            '<tr>'+'<th>İşlem Tipi</th>'+'<td>'+v.tsmdeliveryType.name+'</td>'+'</tr>'+
+                            '<tr>'+'<th>Ödeme</th>'+'<td>'+paymentStatus+'</td>'+'</tr>'+
+                            '<tr>'+'<th>Ok.Saati</th>'+'<td>'+deliverToCourierTime+'</td>'+'</tr>'+
+                            '<tr>'+'<th>Alım Saati</th>'+'<td>'+pickedUpTime+'</td>'+'</tr>'+
+                            '<tr>'+'<th>Teslim Saati</th>'+'<td>'+deliveredTime+'</td>'+'</tr>'+
+                            '<tr>'+'<th>Teslim Alan</th>'+'<td>'+v.deliveredPerson+' '+v.deliveredCompany+'</td>'+'</tr>'+
+                            '<tr>'+'<th>Yetkili(ler)</th>'+'<td>'+officialName+'</td>'+'</tr>'+
+                            '<tr>'+'<th>Kayıt Veren (F1):</th>'+'<td>'+v.tsmf1.name+'</td>'+'</tr>'+
+                            '<tr>'+'<th>Kayıt Veren Tel.:</th>'+'<td>'+v.tsmf1.mobilePhone+'</td>'+'</tr>'+
+                            '<tr>'+'<th>F2 Tel.:</th>'+'<td>'+pickupCustomerPhone+'</td>'+'</tr>'+
+                            '<tr>'+'<th>F3 Tel.:</th>'+'<td>'+deliveredPhone+'</td>'+'</tr>'+
                             '<tr>'+'<th>İşlemi Geri al</th>'+
                             '<td><input type="button" onclick="mypanel.getjobback('+v.id+')" value="Geri al" class="btn btn-danger" /></td>'+
                             '</tr>'+
@@ -561,11 +619,11 @@ let mypanel={
     getjobback: function (jobID) {
 
         let data = {
-            "id": jobID
+            "tsmOrderId": jobID
         };
 
         $.ajax({
-            url: window.localStorage.getItem("ipurl") + "/teslimedilenisigerialkurye",
+            url: window.localStorage.getItem("ipurl") + "/getbackfromdelivered",
             type: "POST",
             data: JSON.stringify(data),
             dataType: "json",
