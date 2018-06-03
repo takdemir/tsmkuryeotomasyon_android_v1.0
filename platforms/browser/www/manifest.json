@@ -1,0 +1,11 @@
+{
+  "background_color": "#FFF",
+  "display": "standalone",
+  "name": "Motorlu Kurye-kuryeotomasyon.com",
+  "short_name": "Motorlu Kurye-kuryeotomasyon.com",
+  "version": "com.tbmyazilim.www",
+  "description": "Kurye Otomasyon Sistemleri V3",
+  "author": "Kurye Otomasyon Sistemleri",
+  "icons": [],
+  "start_url": "login.html"
+}
