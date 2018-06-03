@@ -157,7 +157,7 @@ let mypanel={
     },
     getjobsOnkurye: function (kuryeID) {
 
-        let data={"kuryeID":kuryeID};
+        let data={"courierId":kuryeID};
 
         $.ajax({
             url: window.localStorage.getItem("ipurl")+"/getcourierworkonsforandroid",
