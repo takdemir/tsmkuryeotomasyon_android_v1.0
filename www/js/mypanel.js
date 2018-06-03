@@ -160,7 +160,7 @@ let mypanel={
         let data={"kuryeID":kuryeID};
 
         $.ajax({
-            url: window.localStorage.getItem("ipurl")+"/getjobsonkurye",
+            url: window.localStorage.getItem("ipurl")+"/getcourierworkons",
             type: "POST",
             data: JSON.stringify(data),
             dataType: "json",
@@ -192,15 +192,57 @@ let mypanel={
                             let headId="heading"+i;
                             let collapseId="collapse"+i;
 
+                            let pickupCustomerName = "";
+                            let pickupCustomerDistrict = "";
+                            let pickupCustomerAddress = "";
+                            let pickupCustomerPhone = "";
+                            let pickupCustomerNote = "";
+
+                            if(v.tsmf2===null || v.tsmf2==='' || v.isF2Fake){
+                                pickupCustomerName= v.tsmf1.name;
+                                pickupCustomerDistrict = v.tsmf1.tsmdistrict.districtName;
+                                pickupCustomerAddress = v.tsmf1.address;
+                                pickupCustomerPhone = v.tsmf1.phone;
+                                pickupCustomerNote = v.tsmf1.note;
+                            }else{
+                                pickupCustomerName= v.tsmf2.name;
+                                pickupCustomerDistrict = v.tsmf2.tsmdistrict.districtName;
+                                pickupCustomerAddress = v.tsmf2.address;
+                                pickupCustomerPhone = v.tsmf2.phone;
+                                pickupCustomerNote = v.tsmf2.note;
+                            }
+
+                            let paymentStatusOriginal = v.tsmcustomerinvoices.paymentStatus;
+                            let paymentStatus = 'Ödendi';
+                            if(paymentStatusOriginal==='Unpaid'){
+                                paymentStatus = 'Ödenmedi';
+                            }
+
+                            let deliverToCourierTimeOriginal = v.deliverToCourierTime;
+                            let deliverToCourierTime = "";
+                            let explodeTime = deliverToCourierTimeOriginal.split(' ');
+                            deliverToCourierTime = explodeTime[1];
+
+                            let officialName = "-";
+
+                            if(v.tsmf3.tsmadminofficials !== null && v.tsmf3.tsmadminofficials!=="" && Object.keys(v.tsmf3.tsmadminofficials)>0){
+                                $.each(v.tsmf3.tsmadminofficials, function (kk,vv) {
+
+                                    officialName += vv.name+'-->'+vv.mobilePhone+'<br>';
+
+                                });
+
+                            }
+
                             let color = "panel-default";
-                                if(v.alimsaati!==""){color = "panel-warning";}
+                                if(v.pickupDate!==""){color = "panel-warning";}
                                 table+='<div class="panel '+color+'">'+
 
 
                                 '<div class="panel-heading" role="tab" id="'+headId+'">'+
                                 '<h4 class="panel-title">'+
                                 '<a role="button" data-toggle="collapse" data-parent="#accordion" href="#'+collapseId+'" aria-expanded="true" aria-controls="'+collapseId+'">'+
-                                i+'.Gönderi ('+v.alinansemt+' - '+v.teslimsemt+')'+
+                                i+'.Gönderi ('+pickupCustomerDistrict+' - '+v.tsmf3.tsmdistrict.districtName+')'+
                                 '</a>'+
                                 '</h4>'+
                                 '</div>'+
@@ -210,41 +252,64 @@ let mypanel={
                                 '<div class="panel panel-primary"><div class="panel-heading">ALINACAK</div><div class="panel-body">'+
                                     '<table class="table table-bordered">'+
                                         '<tr>'+'<th>Gönderi Nu.:</th>'+'<td>'+v.id+'</td>'+'</tr>'+
-                                        '<tr>'+'<th>Alınacak Kişi</th>'+'<td>'+v.alinankisi+'</td>'+'</tr>'+
-                                        '<tr>'+'<th>Alınacak Semt</th>'+'<td>'+v.alinansemt+'</td>'+'</tr>'+
-                                        '<tr>'+'<th>Alınacak Adres</th>'+'<td>'+v.alinanadres+'</td>'+'</tr>'+
-                                        '<tr>'+'<th>Tel:</th>'+'<td>'+v.kayitverencep+'</td>'+'</tr>'+
-                                        '<tr>'+'<th>Not1</th>'+'<td>'+v.not1+'</td>'+'</tr>'+
+                                        '<tr>'+'<th>Alınacak Kişi</th>'+'<td>'+pickupCustomerName+'</td>'+'</tr>'+
+                                        '<tr>'+'<th>Alınacak Semt</th>'+'<td>'+pickupCustomerDistrict+'</td>'+'</tr>'+
+                                        '<tr>'+'<th>Alınacak Adres</th>'+'<td>'+pickupCustomerAddress+'</td>'+'</tr>'+
+                                        '<tr>'+'<th>Tel:</th>'+'<td>'+pickupCustomerPhone+'</td>'+'</tr>'+
+                                        '<tr>'+'<th>Not1</th>'+'<td>'+pickupCustomerNote+'</td>'+'</tr>'+
                                     '</table>'+
                                  '</div></div>'+
                                  '<div class="panel panel-primary"><div class="panel-heading">TESLİM EDİLECEK</div><div class="panel-body">'+
                                     '<table class="table table-bordered">'+
-                                        '<tr>'+'<th>Teslim Ed.Kisi</th>'+'<td>'+v.teslimkisi+'</td>'+'</tr>'+
-                                        '<tr>'+'<th>Teslim Ed.Semt</th>'+'<td>'+v.teslimsemt+'</td>'+'</tr>'+
-                                        '<tr>'+'<th>Teslim Ed.Adres</th>'+'<td>'+v.teslimadres+'</td>'+'</tr>'+
-                                        '<tr>'+'<th>Tel:</th>'+'<td>'+v.f3cep+'</td>'+'</tr>'+
-                                        '<tr>'+'<th>Not3</th>'+'<td>'+v.not3+'</td>'+'</tr>'+
+                                        '<tr>'+'<th>Teslim Ed.Kisi</th>'+'<td>'+v.tsmf3.name+'</td>'+'</tr>'+
+                                        '<tr>'+'<th>Teslim Ed.Semt</th>'+'<td>'+v.tsmf3.tsmdistrict.districtName+'</td>'+'</tr>'+
+                                        '<tr>'+'<th>Teslim Ed.Adres</th>'+'<td>'+v.tsmf3.address+'</td>'+'</tr>'+
+                                        '<tr>'+'<th>Tel:</th>'+'<td>'+v.tsmf3.phone+'</td>'+'</tr>'+
+                                        '<tr>'+'<th>Not3</th>'+'<td>'+v.tsmf3.note+'</td>'+'</tr>'+
                                     '</table>'+
                                  '</div></div>'+
                                  '<div class="panel panel-primary"><div class="panel-heading">DİĞER BİLGİLER</div><div class="panel-body">'+
                                     '<table class="table table-bordered">'+
-                                        '<tr>'+'<th>Tutar</th>'+'<td>'+v.tutar+' TL</td>'+'</tr>'+
-                                        '<tr>'+'<th>İşlem Tipi</th>'+'<td>'+v.islemtipi+'</td>'+'</tr>'+
-                                        '<tr>'+'<th>Ödeme</th>'+'<td>'+v.odemedurumu+'</td>'+'</tr>'+
-                                        '<tr>'+'<th>Okuma Saati</th>'+'<td>'+v.okumasaati+'</td>'+'</tr>'+
-                                        '<tr>'+'<th>Yetkili</th>'+'<td>'+v.yetkiliname+'</td>'+'</tr>'+
-                                        '<tr>'+'<th>Yetkili Telefon</th>'+'<td>'+v.yetkilitel+'</td>'+'</tr>'+
-                                        '<tr>'+'<th>Kayıt Veren (F1):</th>'+'<td>'+v.kayitveren+'</td>'+'</tr>'+
-                                        '<tr>'+'<th>Kayıt Veren Tel:</th>'+'<td>'+v.kayitverencep+'</td>'+'</tr>'+
+                                        '<tr>'+'<th>Tutar</th>'+'<td>'+v.tsmcustomerinvoices.total+' TL</td>'+'</tr>'+
+                                        '<tr>'+'<th>İşlem Tipi</th>'+'<td>'+v.tsmdeliveryType.name+'</td>'+'</tr>'+
+                                        '<tr>'+'<th>Ödeme</th>'+'<td>'+paymentStatus+'</td>'+'</tr>'+
+                                        '<tr>'+'<th>Okuma Saati</th>'+'<td>'+deliverToCourierTime+'</td>'+'</tr>'+
+                                        '<tr>'+'<th>Teslimat Yetkili(ler)</th>'+'<td>'+officialName+'</td>'+'</tr>'+
+                                        '<tr>'+'<th>Kayıt Veren (F1):</th>'+'<td>'+v.tsmf1.name+'</td>'+'</tr>'+
+                                        '<tr>'+'<th>Kayıt Veren Tel:</th>'+'<td>'+v.tsmf1.phone+'</td>'+'</tr>';
                                         /*'<tr>'+'<th>F2 Tel.:</th>'+'<td>'+v.f2cep+'</td>'+'</tr>'+*/
 
-                                        '<tr>'+'<td></td>'+'<td><input type="button" onclick="mypanel.executeonjob('+v.id+',\'alindi\','+(i-1)+')" class="btn btn-warning" value="Alındı" /> </td>'+'</tr>'+
-                                        '<tr>'+'<td>' +
-                                            '<input type="text" placeholder="Teslim Edilen" name="teslimEdilen" class="form-control" />' +
-                                            '<input type="text" placeholder="Teslim Saati" name="teslimSaati" class="form-control" onclick="mypanel.getteslimsaati('+(i-1)+')" /> </td>'+
-                                            '<td><input type="button" onclick="mypanel.executeonjob('+v.id+',\'teslim\','+(i-1)+')" class="btn btn-success" value="Teslim" /> </td>'+
-                                        '</tr>'+
-                                '</table>'+
+                                        if(v.willBringBack===1 && (v.isBackTaken===0 || v.backDeliveredPerson==='')){
+
+                                            table +='<tr>'+'<td></td>'+'<td><input type="button" onclick="mypanel.executeonjob('+v.id+',\'pickup\','+(i-1)+')" class="btn btn-warning" value="Alındı" /> </td>'+'</tr>'+
+                                                    '<tr>'+'<td>' +
+                                                    '<input type="text" placeholder="İlk Gön. Tes.Ed.Kişi" name="deliveredName" class="form-control" />' +
+                                                    '<input type="text" placeholder="İlk Gön. Tes.Ed.Şirket" name="deliveredCompany" class="form-control" />' +
+                                                    '<td><input type="button" onclick="mypanel.executeonjob('+v.id+',\'backorderdelivered\','+(i-1)+')" class="btn btn-success" value="Teslim" /> </td>'+
+                                                    '</tr>';
+
+                                        }else if(v.willBringBack===1 && (v.isBackTaken===1 || v.backDeliveredPerson==='')){
+
+                                            table +='<tr>'+'<td></td>'+'<td><input type="button" onclick="mypanel.executeonjob('+v.id+',\'pickup\','+(i-1)+')" class="btn btn-warning" value="Alındı" /> </td>'+'</tr>'+
+                                                '<tr>'+'<td>' +
+                                                '<input type="text" placeholder="Teslim Ed.Kişi" name="deliveredName" class="form-control" />' +
+                                                '<input type="text" placeholder="Teslim Ed.Şirket" name="deliveredCompany" class="form-control" />' +
+                                                '<td><input type="button" onclick="mypanel.executeonjob('+v.id+',\'delivered\','+(i-1)+')" class="btn btn-success" value="Teslim" /> </td>'+
+                                                '</tr>';
+
+                                        }else{
+
+                                            table +='<tr>'+'<td></td>'+'<td><input type="button" onclick="mypanel.executeonjob('+v.id+',\'pickup\','+(i-1)+')" class="btn btn-warning" value="Alındı" /> </td>'+'</tr>'+
+                                                    '<tr>'+'<td>' +
+                                                    '<input type="text" placeholder="Teslim Ed.Kişi" name="deliveredName" class="form-control" />' +
+                                                    '<input type="text" placeholder="Teslim Ed.Şirket" name="deliveredCompany" class="form-control" /> </td>'+
+                                                    '<td><input type="button" onclick="mypanel.executeonjob('+v.id+',\'delivered\','+(i-1)+')" class="btn btn-success" value="Teslim" /> </td>'+
+                                                    '</tr>';
+
+                                        }
+
+
+                                table +='</table>'+
                                     '</div></div>'+
 
 
@@ -379,12 +444,12 @@ let mypanel={
     },
     executeonjob: function (jobID,executetype,eq) {
 
-        if(executetype==='alindi') {
+        if(executetype==='pickup') {
 
-            let data = {"islem": jobID, "action": "alındı"};
+            let data = {"tsmOrderId": jobID};
 
             $.ajax({
-                url: window.localStorage.getItem("ipurl") + "/registerislemlerikurye",
+                url: window.localStorage.getItem("ipurl") + "/setpickedup",
                 type: "POST",
                 data: JSON.stringify(data),
                 dataType: "json",
@@ -410,20 +475,58 @@ let mypanel={
 
             });
 
+        }else if(executetype==='backorderdelivered') {
+
+            let deliveredName = $('input[name="deliveredName"]:eq(' + eq + ')').val();
+            let deliveredCompanyName = $('input[name="deliveredCompany"]:eq(' + eq + ')').val();
+
+            let data = {"tsmOrderId": jobID,"deliveredName":deliveredName,"deliveredCompanyName":deliveredCompanyName};
+
+            if(deliveredName!=='' && deliveredName!==null) {
+
+                $.ajax({
+                    url: window.localStorage.getItem("ipurl") + "/setbackworkdeliveredname",
+                    type: "POST",
+                    data: JSON.stringify(data),
+                    dataType: "json",
+                    beforeSend: function () {
+                        //alert("işler geliyor "+window.localStorage.getItem("ipurl")+" kuryeID:"+kuryeID);
+                    },
+                    error: function (a, b, c) {
+                        //alert("Hata: executejob" + a.responseText);
+                    },
+                    success: function (data) {
+
+                        if (!data.hasError) {
+
+                            mypanel.getjobsOnkurye(window.localStorage.getItem("kuryeID"));
+                            mypanel.getdeliveredjobsOnkurye(window.localStorage.getItem("kuryeID"));
+                            alert("Alındı bildirisi merkeze kaydedildi!");
+
+                        } else {
+                            alert("Alındı bildirilirken bir hata oluştu!");
+                        }
+
+                    }
+
+                });
+            }else{
+                alert('İlk Teslimatın yapıldığı ismi boş bırakmayınız!');
+            }
+
         }else{
 
-            let teslimEdilen=$("input[name='teslimEdilen']:eq(" + eq + ")").val();
-            let teslimsaati=$("input[name='teslimSaati']:eq(" + eq + ")").val();
-            if(teslimEdilen!=="") {
-                var data = {
-                    "islem": jobID,
-                    "action": "teslim",
-                    "teslimalan": teslimEdilen,
-                    "teslimsaati": teslimsaati
+            let deliveredName=$("input[name='deliveredName']:eq(" + eq + ")").val();
+            let deliveredCompanyName=$("input[name='deliveredCompanyName']:eq(" + eq + ")").val();
+            if(deliveredName!=="") {
+                let data = {
+                    "tsmOrderId": jobID,
+                    "deliveredName": deliveredName,
+                    "deliveredCompanyName": deliveredCompanyName
                 };
 
                 $.ajax({
-                    url: window.localStorage.getItem("ipurl") + "/registerislemlerikurye",
+                    url: window.localStorage.getItem("ipurl") + "/setorderdelivered",
                     type: "POST",
                     data: JSON.stringify(data),
                     dataType: "json",

@@ -76,7 +76,7 @@ function onDeviceReadyForMyPanel(){
 
 
 
-        if (latitude != "" && longitude != "") {
+        if (latitude !== "" && longitude !== "") {
 
             let data = {"regid": regid, "kuryeID": kuryeID, "latitude": latitude, "longitude": longitude}
             <!--Passing those values to the insertregid.php file-->
@@ -144,7 +144,7 @@ let mypanel={
 
     checklogin: function () {
 
-        if(window.localStorage.getItem("kuryeID")=="" || window.localStorage.getItem("kuryeID")==null){
+        if(window.localStorage.getItem("kuryeID")==="" || window.localStorage.getItem("kuryeID")===null){
            window.location.href="login.html";
         }
     },
