@@ -27,7 +27,7 @@ function onDeviceReadyForAjaxjs(){
     <!--This will alert registration ID which is returned by the GCM-->
     push.on('registration', function(data) {
         window.localStorage.setItem("regid",data.registrationId);
-        common.showToast('Kayıt başarılı!','short','bottom',0);
+        common.showToast('Kayıt başarılı!'+data.registrationId,'short','bottom',0);
     });
     push.on('notification', function(data) {
 
@@ -155,8 +155,10 @@ let login={
         let regid = window.localStorage.getItem("regid");
         let kuryeID = courierId;
         let email = "";
-        if(regid!=="" && regid!==null && kuryeID!=="" && kuryeID>0) {
-            let data = {"regid": regid, "courierId": kuryeID, "email": email}
+        alert(regid);
+        alert(kuryeID);
+        if(regid!=="" && regid!==null && kuryeID!=="" && parseInt(kuryeID)>0) {
+            let data = {"regid": regid, "courierId": parseInt(kuryeID), "email": email}
             <!--Passing those values to the insertregid.php file-->
             $.ajax({
                 url: window.localStorage.getItem("ipurl") + "/setregid",

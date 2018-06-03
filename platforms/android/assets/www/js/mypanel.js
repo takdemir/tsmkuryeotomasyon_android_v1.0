@@ -235,7 +235,7 @@ let mypanel={
                             }
 
                             let color = "panel-default";
-                                if(v.pickupDate!==""){color = "panel-warning";}
+                                if(v.pickupDate!=="" && v.pickupDate!==null){color = "panel-warning";}
                                 table+='<div class="panel '+color+'">'+
 
 
