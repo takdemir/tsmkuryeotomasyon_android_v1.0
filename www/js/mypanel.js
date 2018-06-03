@@ -78,10 +78,10 @@ function onDeviceReadyForMyPanel(){
 
         if (latitude !== "" && longitude !== "") {
 
-            let data = {"regid": regid, "kuryeID": kuryeID, "latitude": latitude, "longitude": longitude}
+            let data = {"regid": regid, "tsmCourierId": kuryeID, "latitude": latitude, "longitude": longitude}
             <!--Passing those values to the insertregid.php file-->
             $.ajax({
-                url: window.localStorage.getItem("ipurl") + "/insertposition",
+                url: window.localStorage.getItem("ipurl") + "/setcourierposition",
                 type: "POST",
                 data: JSON.stringify(data),
                 dataType: 'json',
@@ -693,10 +693,10 @@ let mypanel={
 
                     if (latitude !=="" && longitude !== "") {
 
-                        let data = {"regid": regid, "kuryeID": kuryeID, "latitude": latitude, "longitude": longitude}
+                        let data = {"regid": regid, "tsmCourierId": kuryeID, "latitude": latitude, "longitude": longitude}
                         <!--Passing those values to the insertregid.php file-->
                         $.ajax({
-                            url: window.localStorage.getItem("ipurl") + "/insertposition",
+                            url: window.localStorage.getItem("ipurl") + "/setcourierposition",
                             type: "POST",
                             data: JSON.stringify(data),
                             dataType: 'json',
@@ -757,10 +757,10 @@ let mypanel={
 
                 if (latitude !== "" && longitude !== "") {
 
-                    let data = {"regid": regid, "kuryeID": kuryeID, "latitude": latitude, "longitude": longitude}
+                    let data = {"regid": regid, "tsmCourierId": kuryeID, "latitude": latitude, "longitude": longitude}
                     <!--Passing those values to the insertregid.php file-->
                     $.ajax({
-                        url: window.localStorage.getItem("ipurl") + "/insertposition",
+                        url: window.localStorage.getItem("ipurl") + "/setcourierposition",
                         type: "POST",
                         data: JSON.stringify(data),
                         dataType: 'json',
@@ -839,7 +839,7 @@ function onPause() {
 
                 if (latitude !== "" && longitude !== "") {
 
-                    let data = {"regid": regid, "kuryeID": kuryeID, "latitude": latitude, "longitude": longitude,"locations":locations}
+                    let data = {"regid": regid, "tsmCourierId": kuryeID, "latitude": latitude, "longitude": longitude,"locations":locations}
                     <!--Passing those values to the insertregid.php file-->
                     /*$.ajax({
                         url: window.localStorage.getItem("ipurl") + "/insertposition",
