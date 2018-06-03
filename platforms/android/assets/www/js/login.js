@@ -64,7 +64,7 @@ let login={
     sessionID: null,
     sessionName: null,
     sessionKuryeId: null,
-    getipurl: "http://kuryeotomasyon.com/api",
+    getipurl: "https://kuryeotomasyon.com/api",
 
     getip: function () {
 
