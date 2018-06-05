@@ -202,13 +202,13 @@ let mypanel={
                                 pickupCustomerName= v.tsmf1.name;
                                 pickupCustomerDistrict = v.tsmf1.tsmdistrict.districtName;
                                 pickupCustomerAddress = v.tsmf1.address;
-                                pickupCustomerPhone = v.tsmf1.phone;
+                                pickupCustomerPhone = v.tsmf1.mobilePhone;
                                 pickupCustomerNote = v.tsmf1.note;
                             }else{
                                 pickupCustomerName= v.tsmf2.name;
                                 pickupCustomerDistrict = v.tsmf2.tsmdistrict.districtName;
                                 pickupCustomerAddress = v.tsmf2.address;
-                                pickupCustomerPhone = v.tsmf2.phone;
+                                pickupCustomerPhone = v.tsmf2.mobilePhone;
                                 pickupCustomerNote = v.tsmf2.note;
                             }
 
@@ -236,7 +236,7 @@ let mypanel={
 
                             let color = "panel-default";
                                 if(v.pickupDate!=="" && v.pickupDate!==null){color = "panel-warning";}
-                                table+='<div class="panel '+color+'">'+
+                                table+='<div class="panel '+color+'" style="padding: 0; margin: 0;">'+
 
 
                                 '<div class="panel-heading" role="tab" id="'+headId+'">'+
@@ -247,9 +247,9 @@ let mypanel={
                                 '</h4>'+
                                 '</div>'+
                                 '<div id="'+collapseId+'" class="panel-collapse collapse '+accordionOpen+'" role="tabpanel" aria-labelledby="'+headId+'">'+
-                                '<div class="panel-body">'+
+                                '<div class="panel-body" style="padding: 0 0 0 0; margin: 0 0 0 0;">'+
 
-                                '<div class="panel panel-primary"><div class="panel-heading">ALINACAK</div><div class="panel-body">'+
+                                '<div class="panel panel-primary" style="padding: 0 0 10px 0; margin: 0 0 10px 0;"><div class="panel-heading">ALINACAK</div><div class="panel-body" style="padding: 0 0 0 0; margin: 0 0 0 0;">'+
                                     '<table class="table table-bordered">'+
                                         '<tr>'+'<th>Gönderi Nu.:</th>'+'<td>'+v.id+'</td>'+'</tr>'+
                                         '<tr>'+'<th>Alınacak Kişi</th>'+'<td>'+pickupCustomerName+'</td>'+'</tr>'+
@@ -259,7 +259,7 @@ let mypanel={
                                         '<tr>'+'<th>Not1</th>'+'<td>'+pickupCustomerNote+'</td>'+'</tr>'+
                                     '</table>'+
                                  '</div></div>'+
-                                 '<div class="panel panel-primary"><div class="panel-heading">TESLİM EDİLECEK</div><div class="panel-body">'+
+                                 '<div class="panel panel-primary" style="padding: 0 0 10px 0; margin: 0 0 10px 0;"><div class="panel-heading">TESLİM EDİLECEK</div><div class="panel-body" style="padding: 0 0 0 0; margin: 0 0 0 0;">'+
                                     '<table class="table table-bordered">'+
                                         '<tr>'+'<th>Teslim Ed.Kisi</th>'+'<td>'+v.tsmf3.name+'</td>'+'</tr>'+
                                         '<tr>'+'<th>Teslim Ed.Semt</th>'+'<td>'+v.tsmf3.tsmdistrict.districtName+'</td>'+'</tr>'+
@@ -268,7 +268,7 @@ let mypanel={
                                         '<tr>'+'<th>Not3</th>'+'<td>'+v.tsmf3.note+'</td>'+'</tr>'+
                                     '</table>'+
                                  '</div></div>'+
-                                 '<div class="panel panel-primary"><div class="panel-heading">DİĞER BİLGİLER</div><div class="panel-body">'+
+                                 '<div class="panel panel-primary" style="padding: 0 0 10px 0; margin: 0 0 10px 0;"><div class="panel-heading">DİĞER BİLGİLER</div><div class="panel-body" style="padding: 0 0 0 0; margin: 0 0 0 0;">'+
                                     '<table class="table table-bordered">'+
                                         '<tr>'+'<th>Tutar</th>'+'<td>'+v.tsmcustomerinvoices.total+' TL</td>'+'</tr>'+
                                         '<tr>'+'<th>İşlem Tipi</th>'+'<td>'+v.tsmdeliveryType.name+'</td>'+'</tr>'+
@@ -276,7 +276,7 @@ let mypanel={
                                         '<tr>'+'<th>Okuma Saati</th>'+'<td>'+deliverToCourierTime+'</td>'+'</tr>'+
                                         '<tr>'+'<th>Teslimat Yetkili(ler)</th>'+'<td>'+officialName+'</td>'+'</tr>'+
                                         '<tr>'+'<th>Kayıt Veren (F1):</th>'+'<td>'+v.tsmf1.name+'</td>'+'</tr>'+
-                                        '<tr>'+'<th>Kayıt Veren Tel:</th>'+'<td>'+v.tsmf1.phone+'</td>'+'</tr>';
+                                        '<tr>'+'<th>Kayıt Veren Tel:</th>'+'<td>'+v.tsmf1.mobilePhone+'</td>'+'</tr>';
                                         /*'<tr>'+'<th>F2 Tel.:</th>'+'<td>'+v.f2cep+'</td>'+'</tr>'+*/
 
                                         if(v.willBringBack===1 && (v.isBackTaken===0 || v.backDeliveredPerson==='')){
@@ -386,13 +386,13 @@ let mypanel={
                             pickupCustomerName= v.tsmf1.name;
                             pickupCustomerDistrict = v.tsmf1.tsmdistrict.districtName;
                             pickupCustomerAddress = v.tsmf1.address;
-                            pickupCustomerPhone = v.tsmf1.phone;
+                            pickupCustomerPhone = v.tsmf1.mobilePhone;
                             pickupCustomerNote = v.tsmf1.note;
                         }else{
                             pickupCustomerName= v.tsmf2.name;
                             pickupCustomerDistrict = v.tsmf2.tsmdistrict.districtName;
                             pickupCustomerAddress = v.tsmf2.address;
-                            pickupCustomerPhone = v.tsmf2.phone;
+                            pickupCustomerPhone = v.tsmf2.mobilePhone;
                             pickupCustomerNote = v.tsmf2.note;
                         }
 
@@ -421,7 +421,7 @@ let mypanel={
 
                         let officialName = "-";
 
-                        if(v.tsmf3.tsmadminofficials !== null && v.tsmf3.tsmadminofficials!=="" && Object.keys(v.tsmf3.tsmadminofficials)>0){
+                        if(v.tsmf3.tsmadminofficials !== null && v.tsmf3.tsmadminofficials!==""){
                             $.each(v.tsmf3.tsmadminofficials, function (kk,vv) {
 
                                 officialName += vv.name+'-->'+vv.mobilePhone+'<br>';
@@ -448,7 +448,7 @@ let mypanel={
                             '</h4>'+
                             '</div>'+
                             '<div id="'+collapseId+'" class="panel-collapse collapse '+accordionOpen+'" role="tabpanel" aria-labelledby="'+headId+'">'+
-                            '<div class="panel-body">'+
+                            '<div class="panel-body" style="padding: 0 0 0 0; margin: 0 0 0 0;">'+
 
 
                             '<table class="table table-bordered">'+
