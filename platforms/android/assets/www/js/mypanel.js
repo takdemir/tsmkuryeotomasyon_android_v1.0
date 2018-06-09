@@ -504,7 +504,7 @@ let mypanel={
 
         if(executetype==='pickup') {
 
-            let data = {"tsmOrderId": jobID};
+            let data = {"tsmOrderId": jobID,"courierId":window.localStorage.getItem("kuryeID")};
 
             $.ajax({
                 url: window.localStorage.getItem("ipurl") + "/setpickedupforandroid",
@@ -523,10 +523,18 @@ let mypanel={
 
                         mypanel.getjobsOnkurye(window.localStorage.getItem("kuryeID"));
                         mypanel.getdeliveredjobsOnkurye(window.localStorage.getItem("kuryeID"));
-                        alert("Alındı bildirisi merkeze kaydedildi!");
+                        let msg = "";
+                        if(data.msg!==''){
+                            msg = data.msg;
+                        }
+                        alert("Alındı bildirisi merkeze kaydedildi!"+msg);
 
                     }else{
-                        alert("Alındı bildirilirken bir hata oluştu!");
+                        let msg = "";
+                        if(data.msg!==''){
+                            msg = data.msg;
+                        }
+                        alert("Alındı bildirilirken bir hata oluştu!"+msg);
                     }
 
                 }
