@@ -123,7 +123,7 @@ let login={
 
                     login.creategcm(data.data.id);
 
-                    login.opensession(data.data.id,data.data.name);
+                    login.opensession(data.data.id,data.data.name,data.data.courierHash);
 
                     common.showToast(data.msg,'long','center',0);
 
@@ -134,12 +134,13 @@ let login={
 
         });
     },
-    opensession: function (sessionKuryeId,kuryeName) {
+    opensession: function (sessionKuryeId,kuryeName,courierHash) {
 
         if (typeof(Storage) !== "undefined") {
             window.localStorage.setItem("kuryeID",sessionKuryeId);
             window.localStorage.setItem("kuryeName",kuryeName);
-            if(window.localStorage.getItem("kuryeID")>0 && window.localStorage.getItem("kuryeID")!==""){
+            window.localStorage.setItem("courierHash",courierHash);
+            if(window.localStorage.getItem("kuryeID")>0 && window.localStorage.getItem("kuryeID")!=="" && window.localStorage.getItem("courierHash")!==""){
                 window.location.href="index.html";
             }else{
                 common.showToast("Oturum açılamıyor. Lütfen yöneticinize başvurun!");
@@ -158,7 +159,7 @@ let login={
         //alert(regid);
         //alert(kuryeID);
         if(regid!=="" && regid!==null && kuryeID!=="" && parseInt(kuryeID)>0) {
-            let data = {"regid": regid, "courierId": parseInt(kuryeID), "email": email}
+            let data = {"regid": regid, "courierId": parseInt(kuryeID), "email": email, "courierHash": window.localStorage.getItem("courierHash")}
             <!--Passing those values to the insertregid.php file-->
             $.ajax({
                 url: window.localStorage.getItem("ipurl") + "/setregid",
@@ -181,6 +182,7 @@ let login={
                         window.localStorage.removeItem("kuryeName");
                         window.localStorage.removeItem("ipurl");
                         window.localStorage.removeItem("regid");
+                        window.localStorage.removeItem("courierHash");
                         window.location.href="login.html";
                     }
                 }
@@ -210,7 +212,7 @@ let login={
 
                     if (latitude !== "" && longitude !== "") {
 
-                        let data = {"regid": regid, "kuryeID": kuryeID, "latitude": latitude, "longitude": longitude}
+                        let data = {"regid": regid, "kuryeID": kuryeID, "latitude": latitude, "longitude": longitude,"courierHash": window.localStorage.getItem("courierHash")}
                         <!--Passing those values to the insertregid.php file-->
                         $.ajax({
                             url: window.localStorage.getItem("ipurl") + "/insertposition",

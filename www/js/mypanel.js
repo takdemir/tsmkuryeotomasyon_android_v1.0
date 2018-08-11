@@ -119,8 +119,8 @@ function onDeviceReadyForMyPanel(){
         stopOnTerminate: true,
         startOnBoot: true,
         startForeground: false,
-        fastestInterval: 1000,
-        activitiesInterval: 5000,
+        fastestInterval: 2000,
+        activitiesInterval: 10000,
         notificationTitle: 'Background tracking',
         notificationText: 'enabled',
         notificationIconColor: '#FEDD1E',
@@ -153,11 +153,12 @@ let mypanel={
         window.localStorage.removeItem("kuryeName");
         window.localStorage.removeItem("ipurl");
         window.localStorage.removeItem("regid");
+        window.localStorage.removeItem("courierHash");
         window.location.href="login.html";
     },
     getjobsOnkurye: function (kuryeID) {
 
-        let data={"courierId":kuryeID};
+        let data={"courierId":kuryeID,"courierHash": window.localStorage.getItem("courierHash")};
 
         $.ajax({
             url: window.localStorage.getItem("ipurl")+"/getcourierworkonsforandroid",
@@ -340,7 +341,7 @@ let mypanel={
     },
     getdeliveredjobsOnkurye: function (kuryeID) {
 
-        let data={"courierId":kuryeID};
+        let data={"courierId":kuryeID,"courierHash": window.localStorage.getItem("courierHash")};
 
         $.ajax({
             url: window.localStorage.getItem("ipurl")+"/getcourierdeliveredworksforandroid",
@@ -504,7 +505,7 @@ let mypanel={
 
         if(executetype==='pickup') {
 
-            let data = {"tsmOrderId": jobID,"courierId":window.localStorage.getItem("kuryeID")};
+            let data = {"tsmOrderId": jobID,"courierId":window.localStorage.getItem("kuryeID"),"courierHash": window.localStorage.getItem("courierHash")};
 
             $.ajax({
                 url: window.localStorage.getItem("ipurl") + "/setpickedupforandroid",
@@ -627,7 +628,7 @@ let mypanel={
     getjobback: function (jobID) {
 
         let data = {
-            "tsmOrderId": jobID
+            "tsmOrderId": jobID,"courierId":window.localStorage.getItem("kuryeID"),"courierHash": window.localStorage.getItem("courierHash")
         };
 
         $.ajax({
@@ -701,7 +702,7 @@ let mypanel={
 
                     if (latitude !=="" && longitude !== "") {
 
-                        let data = {"regid": regid, "tsmCourierId": kuryeID, "latitude": latitude, "longitude": longitude}
+                        let data = {"regid": regid, "tsmCourierId": kuryeID, "latitude": latitude, "longitude": longitude, "courierId":kuryeID, "courierHash": window.localStorage.getItem("courierHash")}
                         <!--Passing those values to the insertregid.php file-->
                         $.ajax({
                             url: window.localStorage.getItem("ipurl") + "/setcourierposition",
@@ -765,7 +766,7 @@ let mypanel={
 
                 if (latitude !== "" && longitude !== "") {
 
-                    let data = {"regid": regid, "tsmCourierId": kuryeID, "latitude": latitude, "longitude": longitude}
+                    let data = {"regid": regid, "tsmCourierId": kuryeID, "latitude": latitude, "longitude": longitude, "courierId":kuryeID, "courierHash": window.localStorage.getItem("courierHash")}
                     <!--Passing those values to the insertregid.php file-->
                     $.ajax({
                         url: window.localStorage.getItem("ipurl") + "/setcourierposition",
