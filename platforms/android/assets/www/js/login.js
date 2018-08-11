@@ -8,7 +8,7 @@ document.addEventListener("deviceready",onDeviceReadyForAjaxjs,false);
 <!--Device Ready Function-->
 function onDeviceReadyForAjaxjs(){
     //alert("Device Ready");
-    common.showToast('Kayıt yapılıyor!','short','bottom',0);
+    //common.showToast('Kayıt yapılıyor!','short','bottom',0);
     <!--Initializing Push Notification-->
     let push = PushNotification.init({
 

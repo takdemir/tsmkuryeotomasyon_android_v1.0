@@ -17,7 +17,7 @@
        under the License.
  */
 
-package com.tbmyazilim.www;
+package com.kuryeotomasyon.www;
 
 import android.os.Bundle;
 import org.apache.cordova.*;
