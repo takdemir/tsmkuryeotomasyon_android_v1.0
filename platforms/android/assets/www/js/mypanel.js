@@ -173,7 +173,7 @@ let mypanel={
             },
             success: function (data) {
 
-
+console.log(data);
 
                     if(data.data!==""){
 
@@ -226,7 +226,7 @@ let mypanel={
 
                             let officialName = "-";
 
-                            if(v.tsmf3.tsmadminofficials !== null && v.tsmf3.tsmadminofficials!=="" && Object.keys(v.tsmf3.tsmadminofficials)>0){
+                            if(v.tsmf3.tsmadminofficials !== null && v.tsmf3.tsmadminofficials!=="" && v.tsmf3.tsmadminofficials!=="undefined"){
                                 $.each(v.tsmf3.tsmadminofficials, function (kk,vv) {
 
                                     officialName += vv.name+'-->'+vv.mobilePhone+'<br>';
@@ -356,7 +356,7 @@ let mypanel={
             },
             success: function (data) {
 
-
+//console.log(data);
 
                 if(data.data!==""){
 
@@ -422,7 +422,7 @@ let mypanel={
 
                         let officialName = "-";
 
-                        if(v.tsmf3.tsmadminofficials !== null && v.tsmf3.tsmadminofficials!==""){
+                        if(v.tsmf3.tsmadminofficials !== null && v.tsmf3.tsmadminofficials!=="" && v.tsmf3.tsmadminofficials!=="undefined"){
                             $.each(v.tsmf3.tsmadminofficials, function (kk,vv) {
 
                                 officialName += vv.name+'-->'+vv.mobilePhone+'<br>';

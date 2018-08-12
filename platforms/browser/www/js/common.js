@@ -2,23 +2,23 @@ function Common() {
 
     this.setlocation = function () {
 
-        var regid = window.localStorage.getItem("regid");
-        var kuryeID = window.localStorage.getItem("kuryeID");
+        let regid = window.localStorage.getItem("regid");
+        let kuryeID = window.localStorage.getItem("kuryeID");
 
-        if(kuryeID!="" && kuryeID>0) {
+        if(kuryeID!=="" && kuryeID>0) {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(function (position) {
-                    var pos = {
+                    let pos = {
                         lat: position.coords.latitude,
                         lng: position.coords.longitude
                     };
 
-                    var latitude = position.coords.latitude;
-                    var longitude = position.coords.longitude;
+                    let latitude = position.coords.latitude;
+                    let longitude = position.coords.longitude;
 
-                    if (latitude != "" && longitude != "") {
+                    if (latitude !== "" && longitude !== "") {
 
-                        var data = {"regid": regid, "kuryeID": kuryeID, "latitude": latitude, "longitude": longitude}
+                        let data = {"regid": regid, "kuryeID": kuryeID, "latitude": latitude, "longitude": longitude}
                         <!--Passing those values to the insertregid.php file-->
                         $.ajax({
                             url: window.localStorage.getItem("ipurl") + "/insertposition",
@@ -68,15 +68,15 @@ function Common() {
 
     this.setpreferences = function () {
 
-        var beepsound = $('#beepsound').val();
-        if(beepsound=="" || beepsound==0 || isNaN(beepsound)){
+        let beepsound = $('#beepsound').val();
+        if(beepsound==="" || beepsound===0 || isNaN(beepsound)){
             common.showToast('Mesaj tekrarı, sayı ve sıfırdan büyük olmak zorundadır!','long','center',0);
             return false;
         }else{
             window.localStorage.setItem('beepsound',beepsound);
         }
-        var vibratetime = $('#vibratetime').val();
-        if(vibratetime=="" || vibratetime==0 || isNaN(vibratetime)){
+        let vibratetime = $('#vibratetime').val();
+        if(vibratetime==="" || vibratetime===0 || isNaN(vibratetime)){
             common.showToast('Titreşim süresi, sayı ve sıfırdan büyük olmak zorundadır!','long','center',0);
             return false;
         }else{
@@ -89,18 +89,18 @@ function Common() {
 
     this.getpreferencebyname = function (preferencename) {
 
-        if(preferencename=='beepsound'){
+        if(preferencename==='beepsound'){
 
-            var beepsound = 1;
-            if(window.localStorage.getItem('beepsound')!="" && window.localStorage.getItem('beepsound')>0){
+            let beepsound = 1;
+            if(window.localStorage.getItem('beepsound')!=="" && window.localStorage.getItem('beepsound')>0){
                 beepsound = window.localStorage.getItem('beepsound');
             }
 
             return beepsound;
 
-        }else if(preferencename=='vibratetime'){
-            var vibratetime = 1;
-            if(window.localStorage.getItem('vibratetime')!="" && window.localStorage.getItem('vibratetime')>0){
+        }else if(preferencename==='vibratetime'){
+            let vibratetime = 1;
+            if(window.localStorage.getItem('vibratetime')!=="" && window.localStorage.getItem('vibratetime')>0){
                 vibratetime = window.localStorage.getItem('vibratetime');
             }
 
@@ -119,4 +119,4 @@ function Common() {
 
 }
 
-var common = new Common();
+let common = new Common();

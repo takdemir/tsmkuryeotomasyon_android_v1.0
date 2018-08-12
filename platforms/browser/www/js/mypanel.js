@@ -25,7 +25,7 @@ function onDeviceReadyForMyPanel(){
 
         <!--Setting attributes for Android, IOS and Windows-->
         android: {
-            senderID: "809436805306"
+            senderID: "429345282610"
         },
         ios: {
             alert: "true",
@@ -119,8 +119,8 @@ function onDeviceReadyForMyPanel(){
         stopOnTerminate: true,
         startOnBoot: true,
         startForeground: false,
-        fastestInterval: 1000,
-        activitiesInterval: 5000,
+        fastestInterval: 2000,
+        activitiesInterval: 10000,
         notificationTitle: 'Background tracking',
         notificationText: 'enabled',
         notificationIconColor: '#FEDD1E',
@@ -153,11 +153,12 @@ let mypanel={
         window.localStorage.removeItem("kuryeName");
         window.localStorage.removeItem("ipurl");
         window.localStorage.removeItem("regid");
+        window.localStorage.removeItem("courierHash");
         window.location.href="login.html";
     },
     getjobsOnkurye: function (kuryeID) {
 
-        let data={"courierId":kuryeID};
+        let data={"courierId":kuryeID,"courierHash": window.localStorage.getItem("courierHash")};
 
         $.ajax({
             url: window.localStorage.getItem("ipurl")+"/getcourierworkonsforandroid",
@@ -172,7 +173,7 @@ let mypanel={
             },
             success: function (data) {
 
-
+console.log(data);
 
                     if(data.data!==""){
 
@@ -202,13 +203,13 @@ let mypanel={
                                 pickupCustomerName= v.tsmf1.name;
                                 pickupCustomerDistrict = v.tsmf1.tsmdistrict.districtName;
                                 pickupCustomerAddress = v.tsmf1.address;
-                                pickupCustomerPhone = v.tsmf1.phone;
+                                pickupCustomerPhone = v.tsmf1.mobilePhone;
                                 pickupCustomerNote = v.tsmf1.note;
                             }else{
                                 pickupCustomerName= v.tsmf2.name;
                                 pickupCustomerDistrict = v.tsmf2.tsmdistrict.districtName;
                                 pickupCustomerAddress = v.tsmf2.address;
-                                pickupCustomerPhone = v.tsmf2.phone;
+                                pickupCustomerPhone = v.tsmf2.mobilePhone;
                                 pickupCustomerNote = v.tsmf2.note;
                             }
 
@@ -225,7 +226,7 @@ let mypanel={
 
                             let officialName = "-";
 
-                            if(v.tsmf3.tsmadminofficials !== null && v.tsmf3.tsmadminofficials!=="" && Object.keys(v.tsmf3.tsmadminofficials)>0){
+                            if(v.tsmf3.tsmadminofficials !== null && v.tsmf3.tsmadminofficials!=="" && v.tsmf3.tsmadminofficials!=="undefined"){
                                 $.each(v.tsmf3.tsmadminofficials, function (kk,vv) {
 
                                     officialName += vv.name+'-->'+vv.mobilePhone+'<br>';
@@ -236,7 +237,7 @@ let mypanel={
 
                             let color = "panel-default";
                                 if(v.pickupDate!=="" && v.pickupDate!==null){color = "panel-warning";}
-                                table+='<div class="panel '+color+'">'+
+                                table+='<div class="panel '+color+'" style="padding: 0; margin: 0;">'+
 
 
                                 '<div class="panel-heading" role="tab" id="'+headId+'">'+
@@ -247,9 +248,9 @@ let mypanel={
                                 '</h4>'+
                                 '</div>'+
                                 '<div id="'+collapseId+'" class="panel-collapse collapse '+accordionOpen+'" role="tabpanel" aria-labelledby="'+headId+'">'+
-                                '<div class="panel-body">'+
+                                '<div class="panel-body" style="padding: 0 0 0 0; margin: 0 0 0 0;">'+
 
-                                '<div class="panel panel-primary"><div class="panel-heading">ALINACAK</div><div class="panel-body">'+
+                                '<div class="panel panel-primary" style="padding: 0 0 10px 0; margin: 0 0 10px 0;"><div class="panel-heading">ALINACAK</div><div class="panel-body" style="padding: 0 0 0 0; margin: 0 0 0 0;">'+
                                     '<table class="table table-bordered">'+
                                         '<tr>'+'<th>Gönderi Nu.:</th>'+'<td>'+v.id+'</td>'+'</tr>'+
                                         '<tr>'+'<th>Alınacak Kişi</th>'+'<td>'+pickupCustomerName+'</td>'+'</tr>'+
@@ -259,7 +260,7 @@ let mypanel={
                                         '<tr>'+'<th>Not1</th>'+'<td>'+pickupCustomerNote+'</td>'+'</tr>'+
                                     '</table>'+
                                  '</div></div>'+
-                                 '<div class="panel panel-primary"><div class="panel-heading">TESLİM EDİLECEK</div><div class="panel-body">'+
+                                 '<div class="panel panel-primary" style="padding: 0 0 10px 0; margin: 0 0 10px 0;"><div class="panel-heading">TESLİM EDİLECEK</div><div class="panel-body" style="padding: 0 0 0 0; margin: 0 0 0 0;">'+
                                     '<table class="table table-bordered">'+
                                         '<tr>'+'<th>Teslim Ed.Kisi</th>'+'<td>'+v.tsmf3.name+'</td>'+'</tr>'+
                                         '<tr>'+'<th>Teslim Ed.Semt</th>'+'<td>'+v.tsmf3.tsmdistrict.districtName+'</td>'+'</tr>'+
@@ -268,7 +269,7 @@ let mypanel={
                                         '<tr>'+'<th>Not3</th>'+'<td>'+v.tsmf3.note+'</td>'+'</tr>'+
                                     '</table>'+
                                  '</div></div>'+
-                                 '<div class="panel panel-primary"><div class="panel-heading">DİĞER BİLGİLER</div><div class="panel-body">'+
+                                 '<div class="panel panel-primary" style="padding: 0 0 10px 0; margin: 0 0 10px 0;"><div class="panel-heading">DİĞER BİLGİLER</div><div class="panel-body" style="padding: 0 0 0 0; margin: 0 0 0 0;">'+
                                     '<table class="table table-bordered">'+
                                         '<tr>'+'<th>Tutar</th>'+'<td>'+v.tsmcustomerinvoices.total+' TL</td>'+'</tr>'+
                                         '<tr>'+'<th>İşlem Tipi</th>'+'<td>'+v.tsmdeliveryType.name+'</td>'+'</tr>'+
@@ -276,7 +277,7 @@ let mypanel={
                                         '<tr>'+'<th>Okuma Saati</th>'+'<td>'+deliverToCourierTime+'</td>'+'</tr>'+
                                         '<tr>'+'<th>Teslimat Yetkili(ler)</th>'+'<td>'+officialName+'</td>'+'</tr>'+
                                         '<tr>'+'<th>Kayıt Veren (F1):</th>'+'<td>'+v.tsmf1.name+'</td>'+'</tr>'+
-                                        '<tr>'+'<th>Kayıt Veren Tel:</th>'+'<td>'+v.tsmf1.phone+'</td>'+'</tr>';
+                                        '<tr>'+'<th>Kayıt Veren Tel:</th>'+'<td>'+v.tsmf1.mobilePhone+'</td>'+'</tr>';
                                         /*'<tr>'+'<th>F2 Tel.:</th>'+'<td>'+v.f2cep+'</td>'+'</tr>'+*/
 
                                         if(v.willBringBack===1 && (v.isBackTaken===0 || v.backDeliveredPerson==='')){
@@ -340,7 +341,7 @@ let mypanel={
     },
     getdeliveredjobsOnkurye: function (kuryeID) {
 
-        let data={"courierId":kuryeID};
+        let data={"courierId":kuryeID,"courierHash": window.localStorage.getItem("courierHash")};
 
         $.ajax({
             url: window.localStorage.getItem("ipurl")+"/getcourierdeliveredworksforandroid",
@@ -355,7 +356,7 @@ let mypanel={
             },
             success: function (data) {
 
-
+//console.log(data);
 
                 if(data.data!==""){
 
@@ -386,13 +387,13 @@ let mypanel={
                             pickupCustomerName= v.tsmf1.name;
                             pickupCustomerDistrict = v.tsmf1.tsmdistrict.districtName;
                             pickupCustomerAddress = v.tsmf1.address;
-                            pickupCustomerPhone = v.tsmf1.phone;
+                            pickupCustomerPhone = v.tsmf1.mobilePhone;
                             pickupCustomerNote = v.tsmf1.note;
                         }else{
                             pickupCustomerName= v.tsmf2.name;
                             pickupCustomerDistrict = v.tsmf2.tsmdistrict.districtName;
                             pickupCustomerAddress = v.tsmf2.address;
-                            pickupCustomerPhone = v.tsmf2.phone;
+                            pickupCustomerPhone = v.tsmf2.mobilePhone;
                             pickupCustomerNote = v.tsmf2.note;
                         }
 
@@ -421,7 +422,7 @@ let mypanel={
 
                         let officialName = "-";
 
-                        if(v.tsmf3.tsmadminofficials !== null && v.tsmf3.tsmadminofficials!=="" && Object.keys(v.tsmf3.tsmadminofficials)>0){
+                        if(v.tsmf3.tsmadminofficials !== null && v.tsmf3.tsmadminofficials!=="" && v.tsmf3.tsmadminofficials!=="undefined"){
                             $.each(v.tsmf3.tsmadminofficials, function (kk,vv) {
 
                                 officialName += vv.name+'-->'+vv.mobilePhone+'<br>';
@@ -448,7 +449,7 @@ let mypanel={
                             '</h4>'+
                             '</div>'+
                             '<div id="'+collapseId+'" class="panel-collapse collapse '+accordionOpen+'" role="tabpanel" aria-labelledby="'+headId+'">'+
-                            '<div class="panel-body">'+
+                            '<div class="panel-body" style="padding: 0 0 0 0; margin: 0 0 0 0;">'+
 
 
                             '<table class="table table-bordered">'+
@@ -504,7 +505,7 @@ let mypanel={
 
         if(executetype==='pickup') {
 
-            let data = {"tsmOrderId": jobID};
+            let data = {"tsmOrderId": jobID,"courierId":window.localStorage.getItem("kuryeID"),"courierHash": window.localStorage.getItem("courierHash")};
 
             $.ajax({
                 url: window.localStorage.getItem("ipurl") + "/setpickedupforandroid",
@@ -523,10 +524,18 @@ let mypanel={
 
                         mypanel.getjobsOnkurye(window.localStorage.getItem("kuryeID"));
                         mypanel.getdeliveredjobsOnkurye(window.localStorage.getItem("kuryeID"));
-                        alert("Alındı bildirisi merkeze kaydedildi!");
+                        let msg = "";
+                        if(data.msg!==''){
+                            msg = data.msg;
+                        }
+                        alert("Alındı bildirisi merkeze kaydedildi!"+msg);
 
                     }else{
-                        alert("Alındı bildirilirken bir hata oluştu!");
+                        let msg = "";
+                        if(data.msg!==''){
+                            msg = data.msg;
+                        }
+                        alert("Alındı bildirilirken bir hata oluştu!"+msg);
                     }
 
                 }
@@ -619,7 +628,7 @@ let mypanel={
     getjobback: function (jobID) {
 
         let data = {
-            "tsmOrderId": jobID
+            "tsmOrderId": jobID,"courierId":window.localStorage.getItem("kuryeID"),"courierHash": window.localStorage.getItem("courierHash")
         };
 
         $.ajax({
@@ -693,7 +702,7 @@ let mypanel={
 
                     if (latitude !=="" && longitude !== "") {
 
-                        let data = {"regid": regid, "tsmCourierId": kuryeID, "latitude": latitude, "longitude": longitude}
+                        let data = {"regid": regid, "tsmCourierId": kuryeID, "latitude": latitude, "longitude": longitude, "courierId":kuryeID, "courierHash": window.localStorage.getItem("courierHash")}
                         <!--Passing those values to the insertregid.php file-->
                         $.ajax({
                             url: window.localStorage.getItem("ipurl") + "/setcourierposition",
@@ -757,7 +766,7 @@ let mypanel={
 
                 if (latitude !== "" && longitude !== "") {
 
-                    let data = {"regid": regid, "tsmCourierId": kuryeID, "latitude": latitude, "longitude": longitude}
+                    let data = {"regid": regid, "tsmCourierId": kuryeID, "latitude": latitude, "longitude": longitude, "courierId":kuryeID, "courierHash": window.localStorage.getItem("courierHash")}
                     <!--Passing those values to the insertregid.php file-->
                     $.ajax({
                         url: window.localStorage.getItem("ipurl") + "/setcourierposition",

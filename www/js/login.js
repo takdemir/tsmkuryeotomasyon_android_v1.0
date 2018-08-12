@@ -7,8 +7,8 @@ document.addEventListener("deviceready",onDeviceReadyForAjaxjs,false);
 
 <!--Device Ready Function-->
 function onDeviceReadyForAjaxjs(){
-    //alert("Device Ready");
-    //common.showToast('Kayıt yapılıyor!','short','bottom',0);
+
+
     <!--Initializing Push Notification-->
     let push = PushNotification.init({
 
@@ -121,7 +121,7 @@ let login={
 
                 if(!data.hasError){
 
-                    login.creategcm(data.data.id);
+                    login.creategcm(data.data.id,data.data.courierHash);
 
                     login.opensession(data.data.id,data.data.name,data.data.courierHash);
 
@@ -151,7 +151,7 @@ let login={
 
     },
 
-    creategcm: function (courierId) {
+    creategcm: function (courierId,courierHash) {
 
         let regid = window.localStorage.getItem("regid");
         let kuryeID = courierId;
@@ -159,7 +159,7 @@ let login={
         //alert(regid);
         //alert(kuryeID);
         if(regid!=="" && regid!==null && kuryeID!=="" && parseInt(kuryeID)>0) {
-            let data = {"regid": regid, "courierId": parseInt(kuryeID), "email": email, "courierHash": window.localStorage.getItem("courierHash")}
+            let data = {"regid": regid, "courierId": parseInt(kuryeID), "email": email, "courierHash": courierHash}
             <!--Passing those values to the insertregid.php file-->
             $.ajax({
                 url: window.localStorage.getItem("ipurl") + "/setregid",

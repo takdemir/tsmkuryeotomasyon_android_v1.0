@@ -7,14 +7,14 @@ document.addEventListener("deviceready",onDeviceReadyForAjaxjs,false);
 
 <!--Device Ready Function-->
 function onDeviceReadyForAjaxjs(){
-    //alert("Device Ready");
-    common.showToast('Kayıt yapılıyor!','short','bottom',0);
+
+
     <!--Initializing Push Notification-->
     let push = PushNotification.init({
 
         <!--Setting attributes for Android, IOS and Windows-->
         android: {
-            senderID: "809436805306"
+            senderID: "429345282610"
         },
         ios: {
             alert: "true",
@@ -27,7 +27,7 @@ function onDeviceReadyForAjaxjs(){
     <!--This will alert registration ID which is returned by the GCM-->
     push.on('registration', function(data) {
         window.localStorage.setItem("regid",data.registrationId);
-        common.showToast('Kayıt başarılı!'+data.registrationId,'short','bottom',0);
+        //common.showToast('Kayıt başarılı!','short','bottom',0);
     });
     push.on('notification', function(data) {
 
@@ -121,9 +121,9 @@ let login={
 
                 if(!data.hasError){
 
-                    login.creategcm(data.data.id);
+                    login.creategcm(data.data.id,data.data.courierHash);
 
-                    login.opensession(data.data.id,data.data.name);
+                    login.opensession(data.data.id,data.data.name,data.data.courierHash);
 
                     common.showToast(data.msg,'long','center',0);
 
@@ -134,12 +134,13 @@ let login={
 
         });
     },
-    opensession: function (sessionKuryeId,kuryeName) {
+    opensession: function (sessionKuryeId,kuryeName,courierHash) {
 
         if (typeof(Storage) !== "undefined") {
             window.localStorage.setItem("kuryeID",sessionKuryeId);
             window.localStorage.setItem("kuryeName",kuryeName);
-            if(window.localStorage.getItem("kuryeID")>0 && window.localStorage.getItem("kuryeID")!==""){
+            window.localStorage.setItem("courierHash",courierHash);
+            if(window.localStorage.getItem("kuryeID")>0 && window.localStorage.getItem("kuryeID")!=="" && window.localStorage.getItem("courierHash")!==""){
                 window.location.href="index.html";
             }else{
                 common.showToast("Oturum açılamıyor. Lütfen yöneticinize başvurun!");
@@ -150,15 +151,15 @@ let login={
 
     },
 
-    creategcm: function (courierId) {
+    creategcm: function (courierId,courierHash) {
 
         let regid = window.localStorage.getItem("regid");
         let kuryeID = courierId;
         let email = "";
-        alert(regid);
-        alert(kuryeID);
+        //alert(regid);
+        //alert(kuryeID);
         if(regid!=="" && regid!==null && kuryeID!=="" && parseInt(kuryeID)>0) {
-            let data = {"regid": regid, "courierId": parseInt(kuryeID), "email": email}
+            let data = {"regid": regid, "courierId": parseInt(kuryeID), "email": email, "courierHash": courierHash}
             <!--Passing those values to the insertregid.php file-->
             $.ajax({
                 url: window.localStorage.getItem("ipurl") + "/setregid",
@@ -181,6 +182,7 @@ let login={
                         window.localStorage.removeItem("kuryeName");
                         window.localStorage.removeItem("ipurl");
                         window.localStorage.removeItem("regid");
+                        window.localStorage.removeItem("courierHash");
                         window.location.href="login.html";
                     }
                 }
@@ -210,7 +212,7 @@ let login={
 
                     if (latitude !== "" && longitude !== "") {
 
-                        let data = {"regid": regid, "kuryeID": kuryeID, "latitude": latitude, "longitude": longitude}
+                        let data = {"regid": regid, "kuryeID": kuryeID, "latitude": latitude, "longitude": longitude,"courierHash": window.localStorage.getItem("courierHash")}
                         <!--Passing those values to the insertregid.php file-->
                         $.ajax({
                             url: window.localStorage.getItem("ipurl") + "/insertposition",
