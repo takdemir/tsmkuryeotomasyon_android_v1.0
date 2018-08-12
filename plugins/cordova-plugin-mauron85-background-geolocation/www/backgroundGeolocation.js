@@ -9,10 +9,10 @@
  1. new method isLocationEnabled
  */
 
-var exec = require('cordova/exec');
-var emptyFnc = function(){};
+let exec = require('cordova/exec');
+let emptyFnc = function(){};
 
-var backgroundGeolocation = {
+let backgroundGeolocation = {
 
     /**
      * @property {Object} provider

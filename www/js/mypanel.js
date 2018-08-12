@@ -75,7 +75,6 @@ function onDeviceReadyForMyPanel(){
         let longitude = location.longitude;
 
 
-
         if (latitude !== "" && longitude !== "") {
 
             let data = {"regid": regid, "tsmCourierId": kuryeID, "latitude": latitude, "longitude": longitude}
@@ -105,6 +104,10 @@ function onDeviceReadyForMyPanel(){
 
     };
 
+    let failureFn = function (error) {
+       alert(error);
+    };
+
     backgroundGeolocation.configure(callbackFn, failureFn, {
         desiredAccuracy: 10,
         stationaryRadius: 20,
@@ -126,7 +129,7 @@ function onDeviceReadyForMyPanel(){
         notificationIconColor: '#FEDD1E',
         notificationIconLarge: 'mappointer_large',
         notificationIconSmall: 'mappointer_small',
-        debug: true
+        debug: false
     });
 
 
@@ -173,7 +176,6 @@ let mypanel={
             },
             success: function (data) {
 
-console.log(data);
 
                     if(data.data!==""){
 
@@ -725,13 +727,13 @@ console.log(data);
 
                     }
 
-                }, function () {
+                }, function (error) {
 
-                    if(PositionError.PERMISSION_DENIED){
+                    if(error.PERMISSION_DENIED){
                         common.showToast('Navigasyonunuza izin veriniz!','short','bottom',0);
-                    }else if(PositionError.POSITION_UNAVAILABLE){
+                    }else if(error.POSITION_UNAVAILABLE){
                         common.showToast('Navigasyonunuz açık değil!','short','bottom',0);
-                    }else if(PositionError.TIMEOUT){
+                    }else if(error.TIMEOUT){
                         common.showToast('Navigasyonunuz üzerinden yerinize ulaşamıyorum!','short','bottom',0);
                     }
 

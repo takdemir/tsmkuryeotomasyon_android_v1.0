@@ -3,14 +3,16 @@
 <plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-mauron85-background-geolocation"
-        version="2.3.1">
+        version="2.3.5">
     <name>CDVBackgroundGeolocation</name>
     <description>Cordova Background Geolocation Plugin</description>
     <license>Apache-2.0</license>
     <keywords>cordova,phonegap,background,geolocation,gps,location</keywords>
 
     <engines>
-        <engine name="cordova" version=">=3.0.0"/>
+        <engine name="cordova" version=">=7.1.0"/>
+        <engine name="cordova-android" version=">=6.3.0"/>
+        <engine name="cordova-ios" version=">=4.4.0"/>
     </engines>
 
     <js-module src="www/backgroundGeolocation.js" name="backgroundGeolocation">
@@ -19,6 +21,8 @@
 
     <!-- android -->
     <platform name="android">
+        <preference name="GOOGLE_PLAY_SERVICES_VERSION" default="11+"/>
+        <preference name="ANDROID_SUPPORT_LIBRARY_VERSION" default="23+"/>
         <preference name="ICON" default="@mipmap/icon" />
         <preference name="SMALL_ICON" default="@mipmap/icon" />
         <preference name="ACCOUNT_NAME" default="@string/app_name" />
@@ -27,8 +31,8 @@
         <preference name="CONTENT_AUTHORITY" default="$PACKAGE_NAME" />
 
         <framework src="android/logtofile.gradle" custom="true" type="gradleReference"/>
-        <framework src="com.google.android.gms:play-services-location:+" />
-        <framework src="com.android.support:support-v4:+" />
+        <framework src="com.google.android.gms:play-services-location:$GOOGLE_PLAY_SERVICES_VERSION" />
+        <framework src="com.android.support:support-v4:$ANDROID_SUPPORT_LIBRARY_VERSION" />
         <source-file src="android/plugin/src/main/java/com/tenforwardconsulting/cordova/BackgroundGeolocationPlugin.java" target-dir="src/com/tenforwardconsulting/cordova"/>
         <source-file src="android/plugin/src/main/java/com/tenforwardconsulting/bgloc/DistanceFilterLocationProvider.java" target-dir="src/com/tenforwardconsulting/bgloc"/>
         <source-file src="android/plugin/src/main/java/com/marianhello/bgloc/AbstractLocationProvider.java" target-dir="src/com/marianhello/bgloc"/>
@@ -160,8 +164,15 @@
 
     <platform name="ios">
         <!-- required background modes:  App registers for location updates -->
-        <preference name="ALWAYS_USAGE_DESCRIPTION" default="This app requires background location tracking" />
+        <preference name="ALWAYS_USAGE_DESCRIPTION" default="This app always requires location tracking" />
+
         <config-file target="*-Info.plist" parent="NSLocationAlwaysUsageDescription">
+            <string>$ALWAYS_USAGE_DESCRIPTION</string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="NSLocationWhenInUseUsageDescription">
+            <string>$ALWAYS_USAGE_DESCRIPTION</string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="NSLocationAlwaysAndWhenInUseUsageDescription">
             <string>$ALWAYS_USAGE_DESCRIPTION</string>
         </config-file>
 

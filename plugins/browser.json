@@ -25,9 +25,6 @@
     "cordova-plugin-locationservices": {
       "PACKAGE_NAME": "com.tbmyazilim.www"
     },
-    "cordova-plugin-mauron85-background-geolocation": {
-      "PACKAGE_NAME": "com.tbmyazilim.www"
-    },
     "cordova-plugin-network-information": {
       "PACKAGE_NAME": "com.tbmyazilim.www"
     },
@@ -42,6 +39,9 @@
     },
     "phonegap-plugin-push": {
       "PACKAGE_NAME": "com.tbmyazilim.www"
+    },
+    "cordova-plugin-mauron85-background-geolocation": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
     }
   },
   "dependent_plugins": {
