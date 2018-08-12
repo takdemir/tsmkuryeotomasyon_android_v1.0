@@ -37,7 +37,7 @@
       "cordova-plugin-insomnia": {},
       "phonegap-plugin-push": {
         "FCM_VERSION": "11.0.1",
-        "SENDER_ID": "809436805306"
+        "SENDER_ID": "429345282610"
       },
       "cordova-plugin-mauron85-background-geolocation": {
         "ICON": "@mipmap/icon",
