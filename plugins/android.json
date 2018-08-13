@@ -50,7 +50,7 @@
       "PACKAGE_NAME": "com.kuryeotomasyon.www"
     },
     "phonegap-plugin-push": {
-      "FCM_VERSION": "11.6.2",
+      "FCM_VERSION": "11.0.1",
       "PACKAGE_NAME": "com.kuryeotomasyon.www"
     }
   },

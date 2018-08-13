@@ -156,7 +156,7 @@ module.exports.metadata =
     "cordova-plugin-whitelist": "1.3.2",
     "cordova-plugin-x-toast": "2.6.0",
     "cordova-plugin-mauron85-background-geolocation": "2.3.5",
-    "phonegap-plugin-push": "2.1.3"
+    "phonegap-plugin-push": "2.1.0"
 }
 // BOTTOM OF METADATA
 });

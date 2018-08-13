@@ -23,7 +23,7 @@
     "cordova-plugin-vibration": "^2.1.5",
     "cordova-plugin-whitelist": "^1.3.2",
     "cordova-plugin-x-toast": "^2.6.0",
-    "phonegap-plugin-push": "^2.1.3"
+    "phonegap-plugin-push": "^2.1.0"
   },
   "cordova": {
     "plugins": {
@@ -47,7 +47,7 @@
         "CONTENT_AUTHORITY": "$PACKAGE_NAME"
       },
       "phonegap-plugin-push": {
-        "FCM_VERSION": "11.6.2"
+        "FCM_VERSION": "11.0.1"
       }
     },
     "platforms": [

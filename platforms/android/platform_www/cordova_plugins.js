@@ -176,7 +176,7 @@ module.exports.metadata =
   "cordova-plugin-locationservices": "2.1.0",
   "cordova-android-support-gradle-release": "1.4.3",
   "cordova-plugin-mauron85-background-geolocation": "2.3.5",
-  "phonegap-plugin-push": "2.1.3"
+  "phonegap-plugin-push": "2.1.0"
 };
 // BOTTOM OF METADATA
 });
