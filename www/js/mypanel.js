@@ -794,7 +794,7 @@ let mypanel={
             }, function (error) {
 
                 if(error.PERMISSION_DENIED){
-                    common.showToast('Navigasyonunuza izin veriniz1!','short','bottom',0);
+                    common.showToast('Navigasyonunuza izin veriniz!','short','bottom',0);
                 }else if(error.POSITION_UNAVAILABLE){
                     common.showToast('Navigasyonunuz açık değil!','short','bottom',0);
                 }else if(error.TIMEOUT){
@@ -818,8 +818,8 @@ let mypanel={
 
 
 mypanel.checklogin();
-mypanel.setlocations();
-mypanel.setlocationswithwatch();
+//mypanel.setlocations();
+//mypanel.setlocationswithwatch();
 
 document.addEventListener("pause", onPause, false);
 function onPause() {
