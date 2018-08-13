@@ -14,7 +14,7 @@ function onDeviceReadyForAjaxjs(){
 
         <!--Setting attributes for Android, IOS and Windows-->
         android: {
-            senderID: "429345282610"
+            senderID: "809436805306"
         },
         ios: {
             alert: "true",
