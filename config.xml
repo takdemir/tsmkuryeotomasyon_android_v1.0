@@ -27,7 +27,6 @@
         <icon density="xhdpi" src="www/res/icon/android/mipmap-xhdpi/kos.png" />
         <icon density="xxhdpi" src="www/res/icon/android/mipmap-xxhdpi/kos.png" />
         <icon density="xxxhdpi" src="www/res/icon/android/mipmap-xxxhdpi/kos.png" />
-        <resource-file src="google-services.json" target="google-services.json" />
     </platform>
     <platform name="ios">
         <allow-intent href="itms:*" />
