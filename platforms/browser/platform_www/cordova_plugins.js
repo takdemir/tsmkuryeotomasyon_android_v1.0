@@ -117,6 +117,14 @@ module.exports = [
         "pluginId": "cordova-plugin-x-toast"
     },
     {
+        "file": "plugins/cordova-plugin-mauron85-background-geolocation/www/backgroundGeolocation.js",
+        "id": "cordova-plugin-mauron85-background-geolocation.backgroundGeolocation",
+        "pluginId": "cordova-plugin-mauron85-background-geolocation",
+        "clobbers": [
+            "backgroundGeolocation"
+        ]
+    },
+    {
         "file": "plugins/phonegap-plugin-push/www/push.js",
         "id": "phonegap-plugin-push.PushNotification",
         "pluginId": "phonegap-plugin-push",
@@ -130,14 +138,6 @@ module.exports = [
         "pluginId": "phonegap-plugin-push",
         "clobbers": [
             "PushNotification"
-        ]
-    },
-    {
-        "file": "plugins/cordova-plugin-mauron85-background-geolocation/www/backgroundGeolocation.js",
-        "id": "cordova-plugin-mauron85-background-geolocation.backgroundGeolocation",
-        "pluginId": "cordova-plugin-mauron85-background-geolocation",
-        "clobbers": [
-            "backgroundGeolocation"
         ]
     }
 ];
@@ -155,8 +155,8 @@ module.exports.metadata =
     "cordova-plugin-vibration": "2.1.5",
     "cordova-plugin-whitelist": "1.3.2",
     "cordova-plugin-x-toast": "2.6.0",
-    "phonegap-plugin-push": "2.1.0",
-    "cordova-plugin-mauron85-background-geolocation": "2.3.5"
+    "cordova-plugin-mauron85-background-geolocation": "2.3.5",
+    "phonegap-plugin-push": "2.1.3"
 }
 // BOTTOM OF METADATA
 });

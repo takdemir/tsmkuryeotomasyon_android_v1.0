@@ -37,10 +37,10 @@
     "cordova-plugin-x-toast": {
       "PACKAGE_NAME": "com.tbmyazilim.www"
     },
-    "phonegap-plugin-push": {
-      "PACKAGE_NAME": "com.tbmyazilim.www"
-    },
     "cordova-plugin-mauron85-background-geolocation": {
+      "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
+    "phonegap-plugin-push": {
       "PACKAGE_NAME": "io.cordova.hellocordova"
     }
   },

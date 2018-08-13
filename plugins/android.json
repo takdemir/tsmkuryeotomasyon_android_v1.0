@@ -31,10 +31,6 @@
     "cordova-plugin-insomnia": {
       "PACKAGE_NAME": "com.tbmyazilim.www"
     },
-    "phonegap-plugin-push": {
-      "FCM_VERSION": "11.0.1",
-      "PACKAGE_NAME": "com.tbmyazilim.www"
-    },
     "cordova-plugin-locationservices": {
       "PACKAGE_NAME": "com.tbmyazilim.www"
     },
@@ -51,6 +47,10 @@
       "ACCOUNT_LABEL": "@string/app_name",
       "ACCOUNT_TYPE": "$PACKAGE_NAME.account",
       "CONTENT_AUTHORITY": "$PACKAGE_NAME",
+      "PACKAGE_NAME": "com.kuryeotomasyon.www"
+    },
+    "phonegap-plugin-push": {
+      "FCM_VERSION": "11.6.2",
       "PACKAGE_NAME": "com.kuryeotomasyon.www"
     }
   },

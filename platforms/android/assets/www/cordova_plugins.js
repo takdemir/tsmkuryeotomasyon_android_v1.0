@@ -110,14 +110,6 @@ module.exports = [
     ]
   },
   {
-    "id": "phonegap-plugin-push.PushNotification",
-    "file": "plugins/phonegap-plugin-push/www/push.js",
-    "pluginId": "phonegap-plugin-push",
-    "clobbers": [
-      "PushNotification"
-    ]
-  },
-  {
     "id": "cordova-plugin-locationservices.Coordinates",
     "file": "plugins/cordova-plugin-locationservices/www/Coordinates.js",
     "pluginId": "cordova-plugin-locationservices",
@@ -160,6 +152,14 @@ module.exports = [
     "clobbers": [
       "backgroundGeolocation"
     ]
+  },
+  {
+    "id": "phonegap-plugin-push.PushNotification",
+    "file": "plugins/phonegap-plugin-push/www/push.js",
+    "pluginId": "phonegap-plugin-push",
+    "clobbers": [
+      "PushNotification"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -173,10 +173,10 @@ module.exports.metadata =
   "cordova-plugin-dialogs": "1.3.3",
   "cordova-plugin-network-information": "1.3.3",
   "cordova-plugin-insomnia": "4.3.0",
-  "phonegap-plugin-push": "2.1.0",
   "cordova-plugin-locationservices": "2.1.0",
   "cordova-android-support-gradle-release": "1.4.3",
-  "cordova-plugin-mauron85-background-geolocation": "2.3.5"
+  "cordova-plugin-mauron85-background-geolocation": "2.3.5",
+  "phonegap-plugin-push": "2.1.3"
 };
 // BOTTOM OF METADATA
 });

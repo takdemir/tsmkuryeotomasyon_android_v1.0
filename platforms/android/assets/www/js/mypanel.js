@@ -74,7 +74,7 @@ function onDeviceReadyForMyPanel(){
         let latitude = location.latitude;
         let longitude = location.longitude;
 
-
+alert(regid);
         if (latitude !== "" && longitude !== "") {
 
             let data = {"regid": regid, "tsmCourierId": kuryeID, "latitude": latitude, "longitude": longitude}
@@ -791,13 +791,13 @@ let mypanel={
 
                 }
 
-            }, function () {
+            }, function (error) {
 
-                if(PositionError.PERMISSION_DENIED){
-                    common.showToast('Navigasyonunuza izin veriniz!','short','bottom',0);
-                }else if(PositionError.POSITION_UNAVAILABLE){
+                if(error.PERMISSION_DENIED){
+                    common.showToast('Navigasyonunuza izin veriniz1!','short','bottom',0);
+                }else if(error.POSITION_UNAVAILABLE){
                     common.showToast('Navigasyonunuz açık değil!','short','bottom',0);
-                }else if(PositionError.TIMEOUT){
+                }else if(error.TIMEOUT){
                     common.showToast('Navigasyonunuz üzerinden yerinize ulaşamıyorum!','short','bottom',0);
                 }
 

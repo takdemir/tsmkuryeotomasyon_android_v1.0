@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="20180814" id="com.kuryeotomasyon.www" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="20180815" id="com.kuryeotomasyon.www" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Motorlu Kurye-kuryeotomasyon.com</name>
     <description>
         Kurye Otomasyon Sistemleri V4
@@ -41,13 +41,9 @@
     <plugin name="cordova-plugin-dialogs" spec="^1.3.3" />
     <plugin name="cordova-plugin-network-information" spec="^1.3.3" />
     <plugin name="cordova-plugin-insomnia" />
-    <plugin name="phonegap-plugin-push" spec="^2.1.0">
-        <variable name="FCM_VERSION" value="11.0.1" />
-        <variable name="SENDER_ID" value="429345282610" />
-    </plugin>
     <plugin name="cordova-plugin-locationservices" spec="^2.1.0" />
-    <plugin name="cordova-plugin-mauron85-background-geolocation" spec="^2.3.5">
-        <variable name="GOOGLE_PLAY_SERVICES_VERSION" value="11+" />
+    <plugin name="cordova-plugin-mauron85-background-geolocation" spec="^2.3.1">
+        <variable name="GOOGLE_PLAY_SERVICES_VERSION" value="11.0.1" />
         <variable name="ANDROID_SUPPORT_LIBRARY_VERSION" value="23+" />
         <variable name="ICON" value="@mipmap/icon" />
         <variable name="SMALL_ICON" value="@mipmap/icon" />
@@ -55,6 +51,9 @@
         <variable name="ACCOUNT_LABEL" value="@string/app_name" />
         <variable name="ACCOUNT_TYPE" value="$PACKAGE_NAME.account" />
         <variable name="CONTENT_AUTHORITY" value="$PACKAGE_NAME" />
+    </plugin>
+    <plugin name="phonegap-plugin-push" spec="^2.1.3">
+        <variable name="FCM_VERSION" value="11.0.1" />
     </plugin>
     <engine name="android" spec="^6.3.0" />
     <engine name="browser" spec="^5.0.3" />
