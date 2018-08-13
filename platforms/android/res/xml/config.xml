@@ -34,7 +34,7 @@
     <feature name="PushNotification">
         <param name="android-package" value="com.adobe.phonegap.push.PushPlugin" />
     </feature>
-    <name>Motorlu Kurye-kuryeotomasyon.com</name>
+    <name>Motorlu Kurye Otomasyon Sistemleri</name>
     <description>
         Kurye Otomasyon Sistemleri V4
     </description>
