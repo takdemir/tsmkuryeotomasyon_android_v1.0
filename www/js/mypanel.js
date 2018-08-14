@@ -73,14 +73,41 @@ function onDeviceReadyForMyPanel(){
         let kuryeID = window.localStorage.getItem("kuryeID");
         let latitude = location.latitude;
         let longitude = location.longitude;
+        let courierHash = window.localStorage.getItem("courierHash");
 
-alert(regid);
         if (latitude !== "" && longitude !== "") {
 
-            let data = {"regid": regid, "tsmCourierId": kuryeID, "latitude": latitude, "longitude": longitude}
+            let data = {"regid": regid, "tsmCourierId": kuryeID, "latitude": latitude, "longitude": longitude,"courierHash": courierHash}
             <!--Passing those values to the insertregid.php file-->
             $.ajax({
                 url: window.localStorage.getItem("ipurl") + "/setcourierposition",
+                type: "POST",
+                data: JSON.stringify(data),
+                dataType: 'json',
+                beforeSend: function () {
+                    //alert(regid);
+                },
+                error: function (a, b, c) {
+                    alert("hata:" + a.responseText);
+                },
+                success: function (data) {
+                    //alert(data);
+                    if (!data.hasError) {
+                        return true;
+                    }
+                }
+            });
+
+        }else{
+
+            let regid = window.localStorage.getItem("regid");
+            let kuryeID = window.localStorage.getItem("kuryeID");
+            let courierHash = window.localStorage.getItem("courierHash");
+
+            let data = {"regid": regid, "tsmCourierId": kuryeID, "courierHash": courierHash};
+            <!--Passing those values to the insertregid.php file-->
+            $.ajax({
+                url: window.localStorage.getItem("ipurl") + "/checkcouriernavigationstatus",
                 type: "POST",
                 data: JSON.stringify(data),
                 dataType: 'json',
@@ -105,7 +132,31 @@ alert(regid);
     };
 
     let failureFn = function (error) {
-       alert(error);
+
+        let regid = window.localStorage.getItem("regid");
+        let kuryeID = window.localStorage.getItem("kuryeID");
+        let courierHash = window.localStorage.getItem("courierHash");
+
+        let data = {"regid": regid, "tsmCourierId": kuryeID, "courierHash": courierHash};
+        <!--Passing those values to the insertregid.php file-->
+        $.ajax({
+            url: window.localStorage.getItem("ipurl") + "/checkcouriernavigationstatus",
+            type: "POST",
+            data: JSON.stringify(data),
+            dataType: 'json',
+            beforeSend: function () {
+                //alert(regid);
+            },
+            error: function (a, b, c) {
+                alert("hata:" + a.responseText);
+            },
+            success: function (data) {
+                //alert(data);
+                if (!data.hasError) {
+                    return true;
+                }
+            }
+        });
     };
 
     backgroundGeolocation.configure(callbackFn, failureFn, {
@@ -115,14 +166,20 @@ alert(regid);
         url: window.localStorage.getItem("ipurl")+'/insertbackgroundposition',
         syncUrl: window.localStorage.getItem("ipurl")+'/insertbackgroundposition',
         httpHeaders: { 'X-FOO': 'bar' },
+        postTemplate: {
+            lat: '@latitude',
+            lon: '@longitude',
+            tsmCourierId: window.localStorage.getItem("kuryeID"), // you can also add your own properties
+            courierId: window.localStorage.getItem("kuryeID") // you can also add your own properties
+        },
         maxLocations: 10000,
         // Android only section
         locationProvider: backgroundGeolocation.provider.ANDROID_ACTIVITY_PROVIDER,
-        interval: 20000,
+        interval: 40000,
         stopOnTerminate: true,
         startOnBoot: true,
         startForeground: false,
-        fastestInterval: 2000,
+        fastestInterval: 50000,
         activitiesInterval: 10000,
         notificationTitle: 'Background tracking',
         notificationText: 'enabled',
@@ -818,8 +875,8 @@ let mypanel={
 
 
 mypanel.checklogin();
-//mypanel.setlocations();
-//mypanel.setlocationswithwatch();
+mypanel.setlocations();
+mypanel.setlocationswithwatch();
 
 document.addEventListener("pause", onPause, false);
 function onPause() {

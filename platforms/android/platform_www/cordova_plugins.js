@@ -152,6 +152,14 @@ module.exports = [
     "clobbers": [
       "PushNotification"
     ]
+  },
+  {
+    "id": "cordova-plugin-mauron85-background-geolocation.backgroundGeolocation",
+    "file": "plugins/cordova-plugin-mauron85-background-geolocation/www/backgroundGeolocation.js",
+    "pluginId": "cordova-plugin-mauron85-background-geolocation",
+    "clobbers": [
+      "backgroundGeolocation"
+    ]
   }
 ];
 module.exports.metadata = 
@@ -167,7 +175,8 @@ module.exports.metadata =
   "cordova-plugin-insomnia": "4.3.0",
   "cordova-plugin-locationservices": "2.1.0",
   "cordova-android-support-gradle-release": "1.4.3",
-  "phonegap-plugin-push": "2.1.3"
+  "phonegap-plugin-push": "2.1.3",
+  "cordova-plugin-mauron85-background-geolocation": "2.3.5"
 };
 // BOTTOM OF METADATA
 });

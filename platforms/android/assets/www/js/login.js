@@ -7,53 +7,57 @@ document.addEventListener("deviceready",onDeviceReadyForAjaxjs,false);
 
 <!--Device Ready Function-->
 function onDeviceReadyForAjaxjs(){
-alert('bende');
-
-    <!--Initializing Push Notification-->
-    var push = PushNotification.init({
-
-        <!--Setting attributes for Android, IOS and Windows-->
-        android: {
-            senderID: "809436805306"
-        },
-        ios: {
-            alert: "true",
-            badge: "true",
-            sound: "true"
-        },
-        windows: {}
-    });
-
-    <!--This will alert registration ID which is returned by the GCM-->
-    push.on('registration', function(data) {alert(data.registrationId);
-        window.localStorage.setItem("regid",data.registrationId);
-        //common.showToast('Kayıt başarılı!','short','bottom',0);
-    });
-    push.on('notification', function(data) {
-
-        if(window.localStorage.getItem("kuryeID")!=="" && window.localStorage.getItem("kuryeID")>0) {
-            mypanel.getjobsOnkurye(window.localStorage.getItem("kuryeID"));
-            mypanel.getdeliveredjobsOnkurye(window.localStorage.getItem("kuryeID"));
-        }
-
-        navigator.notification.alert(
-            data.message,         // message
-            null,                 // callback
-            data.title,           // title
-            'Tamam'                  // buttonName
-        );
 
 
-        var beepsound = common.getpreferencebyname('beepsound');
-        var vibratetime = common.getpreferencebyname('vibratetime');
-        navigator.notification.beep(beepsound);
-        navigator.notification.vibrate(vibratetime);
+    try {
+        <!--Initializing Push Notification-->
+        let push = PushNotification.init({
+
+            <!--Setting attributes for Android, IOS and Windows-->
+            android: {
+                senderID: "809436805306"
+            },
+            ios: {
+                alert: "true",
+                badge: "true",
+                sound: "true"
+            },
+            windows: {}
+        });
+
+        <!--This will alert registration ID which is returned by the GCM-->
+        push.on('registration', function (data) {
+            window.localStorage.setItem("regid", data.registrationId);
+            //common.showToast('Kayıt başarılı!','short','bottom',0);
+        });
+        push.on('notification', function (data) {
+
+            if (window.localStorage.getItem("kuryeID") !== "" && window.localStorage.getItem("kuryeID") > 0) {
+                mypanel.getjobsOnkurye(window.localStorage.getItem("kuryeID"));
+                mypanel.getdeliveredjobsOnkurye(window.localStorage.getItem("kuryeID"));
+            }
+
+            navigator.notification.alert(
+                data.message,         // message
+                null,                 // callback
+                data.title,           // title
+                'Tamam'                  // buttonName
+            );
 
 
-    });
-    push.on('error', function(e) {
-        common.showToast('Hata oluştu!');
-    });
+            let beepsound = common.getpreferencebyname('beepsound');
+            let vibratetime = common.getpreferencebyname('vibratetime');
+            navigator.notification.beep(beepsound);
+            navigator.notification.vibrate(vibratetime);
+
+
+        });
+        push.on('error', function (e) {
+            common.showToast('Hata oluştu!');
+        });
+    }catch (e) {
+        common.showToast('Catch hatası meydana geldi. Lütfen yazılımcı ile görüşün!'+e.message);
+    }
 
 
 }
