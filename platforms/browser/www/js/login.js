@@ -10,7 +10,7 @@ function onDeviceReadyForAjaxjs(){
 
 
     <!--Initializing Push Notification-->
-    let push = PushNotification.init({
+    var push = PushNotification.init({
 
         <!--Setting attributes for Android, IOS and Windows-->
         android: {
@@ -25,7 +25,7 @@ function onDeviceReadyForAjaxjs(){
     });
 
     <!--This will alert registration ID which is returned by the GCM-->
-    push.on('registration', function(data) {alert(data);alert(data.registrationId);
+    push.on('registration', function(data) {alert(data.registrationId);
         window.localStorage.setItem("regid",data.registrationId);
         //common.showToast('Kayıt başarılı!','short','bottom',0);
     });
@@ -44,8 +44,8 @@ function onDeviceReadyForAjaxjs(){
         );
 
 
-        let beepsound = common.getpreferencebyname('beepsound');
-        let vibratetime = common.getpreferencebyname('vibratetime');
+        var beepsound = common.getpreferencebyname('beepsound');
+        var vibratetime = common.getpreferencebyname('vibratetime');
         navigator.notification.beep(beepsound);
         navigator.notification.vibrate(vibratetime);
 
