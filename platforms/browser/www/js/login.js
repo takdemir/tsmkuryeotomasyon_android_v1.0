@@ -7,7 +7,7 @@ document.addEventListener("deviceready",onDeviceReadyForAjaxjs,false);
 
 <!--Device Ready Function-->
 function onDeviceReadyForAjaxjs(){
-
+alert('bende');
 
     <!--Initializing Push Notification-->
     var push = PushNotification.init({
