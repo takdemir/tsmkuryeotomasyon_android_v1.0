@@ -6,7 +6,7 @@
 document.addEventListener("deviceready",onDeviceReadyForAjaxjs,false);
 
 <!--Device Ready Function-->
-function onDeviceReadyForAjaxjs(){
+//function onDeviceReadyForAjaxjs(){
 
 
     <!--Initializing Push Notification-->
@@ -56,7 +56,7 @@ function onDeviceReadyForAjaxjs(){
     });
 
 
-}
+//}
 
 
 let login={
