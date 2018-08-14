@@ -25,7 +25,7 @@ function onDeviceReadyForAjaxjs(){
     });
 
     <!--This will alert registration ID which is returned by the GCM-->
-    push.on('registration', function(data) {
+    push.on('registration', function(data) {alert(data);alert(data.registrationId);
         window.localStorage.setItem("regid",data.registrationId);
         //common.showToast('Kayıt başarılı!','short','bottom',0);
     });
