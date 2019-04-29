@@ -44,19 +44,21 @@ function onDeviceReadyForMyPanel(){
         if(window.localStorage.getItem("kuryeID")!=="" && window.localStorage.getItem("kuryeID")>0) {
             mypanel.getjobsOnkurye(window.localStorage.getItem("kuryeID"));
             mypanel.getdeliveredjobsOnkurye(window.localStorage.getItem("kuryeID"));
+
+            navigator.notification.alert(
+                data.message,         // message
+                null,                 // callback
+                data.title,           // title
+                'Tamam'                  // buttonName
+            );
+
+            let beepsound = common.getpreferencebyname('beepsound');
+            let vibratetime = common.getpreferencebyname('vibratetime');
+            navigator.notification.beep(beepsound);
+            navigator.notification.vibrate(vibratetime);
         }
 
-        navigator.notification.alert(
-            data.message,         // message
-            null,                 // callback
-            data.title,           // title
-            'Tamam'                  // buttonName
-        );
 
-        let beepsound = common.getpreferencebyname('beepsound');
-        let vibratetime = common.getpreferencebyname('vibratetime');
-        navigator.notification.beep(beepsound);
-        navigator.notification.vibrate(vibratetime);
 
 
     });
@@ -332,7 +334,8 @@ let mypanel={
                                     '<table class="table table-bordered">'+
                                         '<tr>'+'<th>Tutar</th>'+'<td>'+v.tsmcustomerinvoices.total+' TL</td>'+'</tr>'+
                                         '<tr>'+'<th>İşlem Tipi</th>'+'<td>'+v.tsmdeliveryType.name+'</td>'+'</tr>'+
-                                        '<tr>'+'<th>Ödeme</th>'+'<td>'+paymentStatus+'</td>'+'</tr>'+
+                                        '<tr>'+'<th>Ödeme Tipi</th>'+'<td>'+v.tsmpaymentType.paymentType+'</td>'+'</tr>'+
+                                        '<tr>'+'<th>Ödeme Durumu</th>'+'<td>'+paymentStatus+'</td>'+'</tr>'+
                                         '<tr>'+'<th>Okuma Saati</th>'+'<td>'+deliverToCourierTime+'</td>'+'</tr>'+
                                         '<tr>'+'<th>Teslimat Yetkili(ler)</th>'+'<td>'+officialName+'</td>'+'</tr>'+
                                         '<tr>'+'<th>Kayıt Veren (F1):</th>'+'<td>'+v.tsmf1.name+'</td>'+'</tr>'+
@@ -685,9 +688,10 @@ let mypanel={
         
     },
     getjobback: function (jobID) {
-
+        let courierId = window.localStorage.getItem("kuryeID");
+        let courierName = window.localStorage.getItem("kuryeName");
         let data = {
-            "tsmOrderId": jobID,"courierId":window.localStorage.getItem("kuryeID"),"courierHash": window.localStorage.getItem("courierHash")
+            "tsmOrderId": jobID,"courierId":courierId,"courierHash": window.localStorage.getItem("courierHash")
         };
 
         $.ajax({
@@ -705,8 +709,9 @@ let mypanel={
 
                 if (!data.hasError) {
 
-                    mypanel.getjobsOnkurye(window.localStorage.getItem("kuryeID"));
-                    mypanel.getdeliveredjobsOnkurye(window.localStorage.getItem("kuryeID"));
+                    mypanel.getjobsOnkurye(courierId);
+                    mypanel.getdeliveredjobsOnkurye(courierId);
+                    socket.emit('courierNotifier',{'message':courierName+' isimli kurye <a href="/operation">' + jobID + '</a> numaralı siparişi teslim edildiden, kurye üzerindeye geri aldı!','orderId':jobID,'courierId':courierId,'process':'courierNotifiergetbackfromdelivered','host':host});
                     alert("Teslimat geri alındı!");
 
                 } else {
