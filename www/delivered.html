@@ -57,6 +57,29 @@
     <script type="text/javascript" charset="utf-8" src="push.js"></script>
     <script type="text/javascript" charset="utf-8" src="backgroundGeolocation.js"></script>
     <script type="text/javascript" src="js/mypanel.js"></script>
+    <script>
+        socket.on('sendtocourier', function(data){
+            mypanel.notificationAlert(data.orderId+' numaralı gönderi üzerinize atandı!','Şirket mesajı');
+        });
+        socket.on('getBackFromCourier', function(data){
+            mypanel.notificationAlert(data.orderId+' numaralı gönderi üzerinizden alındı!','Şirket mesajı');
+        });
+        socket.on('setorderDelivered', function(data){
+            mypanel.notificationAlert(data.orderId+' numaralı gönderi teslim edildi yapıldı!','Şirket mesajı');
+        });
+        socket.on('setPickedUp', function(data){
+            mypanel.notificationAlert(data.orderId+' numaralı gönderi teslim alındı yapıldı!','Şirket mesajı');
+        });
+        socket.on('setPickedupBackMessage', function(data){
+            mypanel.notificationAlert(data.message,'Şirket mesajı');
+        });
+        socket.on('getBackFromDelivered', function(data){
+            mypanel.notificationAlert(data.orderId+' numaralı gönderi, teslim edildiden, alındıya geri çekildi!','Şirket mesajı');
+        });
+        socket.on('specialMessage', function(data){
+            mypanel.notificationAlert(data.message,'Şirket mesajı');
+        });
+    </script>
 </head>
 
 <body class="nav-md">
