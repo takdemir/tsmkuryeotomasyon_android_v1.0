@@ -42,7 +42,7 @@ function onDeviceReadyForMyPanel(){
     push.on('notification', function(data) {
 
         if(window.localStorage.getItem("kuryeID")!=="" && window.localStorage.getItem("kuryeID")>0) {
-            mypanel.getjobsOnkurye(window.localStorage.getItem("kuryeID"));
+           /* mypanel.getjobsOnkurye(window.localStorage.getItem("kuryeID"));
             mypanel.getdeliveredjobsOnkurye(window.localStorage.getItem("kuryeID"));
 
             navigator.notification.alert(
@@ -55,7 +55,7 @@ function onDeviceReadyForMyPanel(){
             let beepsound = common.getpreferencebyname('beepsound');
             let vibratetime = common.getpreferencebyname('vibratetime');
             navigator.notification.beep(beepsound);
-            navigator.notification.vibrate(vibratetime);
+            navigator.notification.vibrate(vibratetime);*/
         }
 
 
