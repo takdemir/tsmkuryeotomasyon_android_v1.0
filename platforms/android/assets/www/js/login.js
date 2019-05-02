@@ -27,8 +27,12 @@ function onDeviceReadyForAjaxjs(){
 
         <!--This will alert registration ID which is returned by the GCM-->
         push.on('registration', function (data) {
+            if(data.registrationId!=='' && data.registrationId!==undefined && data.registrationId!==null){
+                common.showToast('Regid kaydı başarılı!','short','bottom',0);
+            }else{
+                common.showToast('Regid:'+data.registrationId,'short','bottom',0);
+            }
             window.localStorage.setItem("regid", data.registrationId);
-            //common.showToast('Kayıt başarılı!','short','bottom',0);
         });
         push.on('notification', function (data) {
 
@@ -55,7 +59,7 @@ function onDeviceReadyForAjaxjs(){
 
         });
         push.on('error', function (e) {
-            common.showToast('Hata oluştu!');
+            common.showToast('Hata oluştu!'+e.message);
         });
     }catch (e) {
         common.showToast('Catch hatası meydana geldi. Lütfen yazılımcı ile görüşün!'+e.message);

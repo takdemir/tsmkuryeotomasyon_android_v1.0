@@ -1,11 +1,1 @@
-{
-  "background_color": "#FFF",
-  "display": "standalone",
-  "name": "Motorlu Kurye Otomasyon Sistemleri",
-  "short_name": "Motorlu Kurye Otomasyon Sistemleri",
-  "version": "com.kuryeotomasyon.www",
-  "description": "Kurye Otomasyon Sistemleri V4",
-  "author": "Kurye Otomasyon Sistemleri",
-  "icons": [],
-  "start_url": "login.html"
-}
+{"background_color":"#FFF","display":"standalone","name":"Motorlu Kurye Otomasyon Sistemleri","short_name":"Motorlu Kurye Otomasyon Sistemleri","version":"com.kuryeotomasyon.www","description":"Kurye Otomasyon Sistemleri V4","author":"Kurye Otomasyon Sistemleri","icons":[],"start_url":"login.html","gcm_sender_id":"996231231186"}

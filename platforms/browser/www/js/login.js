@@ -11,7 +11,7 @@ function onDeviceReadyForAjaxjs(){
 
     try {
         <!--Initializing Push Notification-->
-        var push = PushNotification.init({
+        let push = PushNotification.init({
 
             <!--Setting attributes for Android, IOS and Windows-->
             android: {
@@ -27,33 +27,39 @@ function onDeviceReadyForAjaxjs(){
 
         <!--This will alert registration ID which is returned by the GCM-->
         push.on('registration', function (data) {
+            if(data.registrationId!=='' && data.registrationId!==undefined && data.registrationId!==null){
+                common.showToast('Regid kaydı başarılı!','short','bottom',0);
+            }else{
+                common.showToast('Regid:'+data.registrationId,'short','bottom',0);
+            }
             window.localStorage.setItem("regid", data.registrationId);
-            //common.showToast('Kayıt başarılı!','short','bottom',0);
         });
         push.on('notification', function (data) {
 
             if (window.localStorage.getItem("kuryeID") !== "" && window.localStorage.getItem("kuryeID") > 0) {
-                mypanel.getjobsOnkurye(window.localStorage.getItem("kuryeID"));
+                /*mypanel.getjobsOnkurye(window.localStorage.getItem("kuryeID"));
                 mypanel.getdeliveredjobsOnkurye(window.localStorage.getItem("kuryeID"));
+
+                navigator.notification.alert(
+                    data.message,         // message
+                    null,                 // callback
+                    data.title,           // title
+                    'Tamam'                  // buttonName
+                );
+
+
+                let beepsound = common.getpreferencebyname('beepsound');
+                let vibratetime = common.getpreferencebyname('vibratetime');
+                navigator.notification.beep(beepsound);
+                navigator.notification.vibrate(vibratetime);*/
             }
 
-            navigator.notification.alert(
-                data.message,         // message
-                null,                 // callback
-                data.title,           // title
-                'Tamam'                  // buttonName
-            );
 
-
-            var beepsound = common.getpreferencebyname('beepsound');
-            var vibratetime = common.getpreferencebyname('vibratetime');
-            navigator.notification.beep(beepsound);
-            navigator.notification.vibrate(vibratetime);
 
 
         });
         push.on('error', function (e) {
-            common.showToast('Hata oluştu!');
+            common.showToast('Hata oluştu!'+e.message);
         });
     }catch (e) {
         common.showToast('Catch hatası meydana geldi. Lütfen yazılımcı ile görüşün!'+e.message);

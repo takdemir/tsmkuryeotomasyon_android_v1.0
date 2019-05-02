@@ -29,6 +29,53 @@
 
     <!-- Custom Theme Style -->
     <link href="build/css/custom.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://socket.kuryeotomasyon.com/socket.io/socket.io.js"></script>
+    <script>
+        var socket = io.connect("https://socket.kuryeotomasyon.com");
+        var host = window.localStorage.getItem("ipurl");
+        if(host!=='' && host!==undefined && host!==null){
+            host = host.replace('/api','');
+        }
+        var username = window.localStorage.getItem("courierHash");
+        if(username!=='' && username!==null && username!==undefined){
+            socket.emit('connected-user-info',{"username": username, "host":host });
+            socket.on('connected-user-info',function(data){
+
+            });
+
+        }
+
+
+    </script>
+    <script src="vendors/jquery/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="js/common.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" charset="utf-8" src="push.js"></script>
+    <script type="text/javascript" charset="utf-8" src="backgroundGeolocation.js"></script>
+    <script type="text/javascript" src="js/mypanel.js"></script>
+    <script>
+        socket.on('sendtocourier', function(data){
+            mypanel.notificationAlert(data.orderId+' numaralı gönderi üzerinize atandı!','Şirket mesajı');
+        });
+        socket.on('getBackFromCourier', function(data){
+            mypanel.notificationAlert(data.orderId+' numaralı gönderi üzerinizden alındı!','Şirket mesajı');
+        });
+        socket.on('setorderDelivered', function(data){
+            mypanel.notificationAlert(data.orderId+' numaralı gönderi teslim edildi yapıldı!','Şirket mesajı');
+        });
+        socket.on('setPickedUp', function(data){
+            mypanel.notificationAlert(data.orderId+' numaralı gönderi teslim alındı yapıldı!','Şirket mesajı');
+        });
+        socket.on('setPickedupBackMessage', function(data){
+            mypanel.notificationAlert(data.message,'Şirket mesajı');
+        });
+        socket.on('getBackFromDelivered', function(data){
+            mypanel.notificationAlert(data.orderId+' numaralı gönderi, teslim edildiden, alındıya geri çekildi!','Şirket mesajı');
+        });
+        socket.on('specialMessage', function(data){
+            mypanel.notificationAlert(data.message,'Şirket mesajı');
+        });
+    </script>
     <script type="text/javascript">
         $(document).ready(function () {
 
@@ -191,7 +238,7 @@
 
                     <!-- VERY IMPORTANT!!!!!!!!!!! -->
 
-                    <div class="app" style="visibility: hidden;">
+                    <div class="app" style="display: none;">
                         <h1>kuryeotomasyon.com</h1>
                         <div id="deviceready" class="blink">
                             <p class="event listening"></p>
@@ -202,12 +249,7 @@
 
     </div>
 </div>
-<script src="vendors/jquery/dist/jquery.min.js"></script>
-<script type="text/javascript" src="js/common.js"></script>
-<script type="text/javascript" src="cordova.js"></script>
-<script type="text/javascript" charset="utf-8" src="push.js"></script>
-<script type="text/javascript" charset="utf-8" src="backgroundGeolocation.js"></script>
-<script type="text/javascript" src="js/mypanel.js"></script>
+
 <script type="text/javascript">
     $(document).ready(function () {
 

@@ -42,21 +42,23 @@ function onDeviceReadyForMyPanel(){
     push.on('notification', function(data) {
 
         if(window.localStorage.getItem("kuryeID")!=="" && window.localStorage.getItem("kuryeID")>0) {
-            mypanel.getjobsOnkurye(window.localStorage.getItem("kuryeID"));
+           /* mypanel.getjobsOnkurye(window.localStorage.getItem("kuryeID"));
             mypanel.getdeliveredjobsOnkurye(window.localStorage.getItem("kuryeID"));
+
+            navigator.notification.alert(
+                data.message,         // message
+                null,                 // callback
+                data.title,           // title
+                'Tamam'                  // buttonName
+            );
+
+            let beepsound = common.getpreferencebyname('beepsound');
+            let vibratetime = common.getpreferencebyname('vibratetime');
+            navigator.notification.beep(beepsound);
+            navigator.notification.vibrate(vibratetime);*/
         }
 
-        navigator.notification.alert(
-            data.message,         // message
-            null,                 // callback
-            data.title,           // title
-            'Tamam'                  // buttonName
-        );
 
-        let beepsound = common.getpreferencebyname('beepsound');
-        let vibratetime = common.getpreferencebyname('vibratetime');
-        navigator.notification.beep(beepsound);
-        navigator.notification.vibrate(vibratetime);
 
 
     });
@@ -73,14 +75,41 @@ function onDeviceReadyForMyPanel(){
         let kuryeID = window.localStorage.getItem("kuryeID");
         let latitude = location.latitude;
         let longitude = location.longitude;
+        let courierHash = window.localStorage.getItem("courierHash");
 
-alert(regid);
         if (latitude !== "" && longitude !== "") {
 
-            let data = {"regid": regid, "tsmCourierId": kuryeID, "latitude": latitude, "longitude": longitude}
+            let data = {"regid": regid, "tsmCourierId": kuryeID, "latitude": latitude, "longitude": longitude,"courierHash": courierHash}
             <!--Passing those values to the insertregid.php file-->
             $.ajax({
                 url: window.localStorage.getItem("ipurl") + "/setcourierposition",
+                type: "POST",
+                data: JSON.stringify(data),
+                dataType: 'json',
+                beforeSend: function () {
+                    //alert(regid);
+                },
+                error: function (a, b, c) {
+                    alert("hata:" + a.responseText);
+                },
+                success: function (data) {
+                    //alert(data);
+                    if (!data.hasError) {
+                        return true;
+                    }
+                }
+            });
+
+        }else{
+
+            let regid = window.localStorage.getItem("regid");
+            let kuryeID = window.localStorage.getItem("kuryeID");
+            let courierHash = window.localStorage.getItem("courierHash");
+
+            let data = {"regid": regid, "courierId": kuryeID, "courierHash": courierHash};
+            <!--Passing those values to the insertregid.php file-->
+            $.ajax({
+                url: window.localStorage.getItem("ipurl") + "/checkcouriernavigationstatus",
                 type: "POST",
                 data: JSON.stringify(data),
                 dataType: 'json',
@@ -105,7 +134,31 @@ alert(regid);
     };
 
     let failureFn = function (error) {
-       alert(error);
+
+        let regid = window.localStorage.getItem("regid");
+        let kuryeID = window.localStorage.getItem("kuryeID");
+        let courierHash = window.localStorage.getItem("courierHash");
+
+        let data = {"regid": regid, "courierId": kuryeID, "courierHash": courierHash};
+        <!--Passing those values to the insertregid.php file-->
+        $.ajax({
+            url: window.localStorage.getItem("ipurl") + "/checkcouriernavigationstatus",
+            type: "POST",
+            data: JSON.stringify(data),
+            dataType: 'json',
+            beforeSend: function () {
+                //alert(regid);
+            },
+            error: function (a, b, c) {
+                alert("hata:" + a.responseText);
+            },
+            success: function (data) {
+                //alert(data);
+                if (!data.hasError) {
+                    return true;
+                }
+            }
+        });
     };
 
     backgroundGeolocation.configure(callbackFn, failureFn, {
@@ -115,14 +168,20 @@ alert(regid);
         url: window.localStorage.getItem("ipurl")+'/insertbackgroundposition',
         syncUrl: window.localStorage.getItem("ipurl")+'/insertbackgroundposition',
         httpHeaders: { 'X-FOO': 'bar' },
+        postTemplate: {
+            lat: '@latitude',
+            lon: '@longitude',
+            tsmCourierId: window.localStorage.getItem("kuryeID"), // you can also add your own properties
+            courierId: window.localStorage.getItem("kuryeID") // you can also add your own properties
+        },
         maxLocations: 10000,
         // Android only section
         locationProvider: backgroundGeolocation.provider.ANDROID_ACTIVITY_PROVIDER,
-        interval: 20000,
+        interval: 40000,
         stopOnTerminate: true,
         startOnBoot: true,
         startForeground: false,
-        fastestInterval: 2000,
+        fastestInterval: 50000,
         activitiesInterval: 10000,
         notificationTitle: 'Background tracking',
         notificationText: 'enabled',
@@ -150,6 +209,25 @@ let mypanel={
         if(window.localStorage.getItem("kuryeID")==="" || window.localStorage.getItem("kuryeID")===null){
            window.location.href="login.html";
         }
+    },
+    notificationAlert: function(message,title){
+
+        if(window.localStorage.getItem("kuryeID")!=="" && window.localStorage.getItem("kuryeID")>0) {
+            this.getjobsOnkurye(window.localStorage.getItem("kuryeID"));
+            this.getdeliveredjobsOnkurye(window.localStorage.getItem("kuryeID"));
+        }
+        let beepsound = common.getpreferencebyname('beepsound');
+        let vibratetime = common.getpreferencebyname('vibratetime');
+        navigator.notification.alert(
+            message,         // message
+            null,                 // callback
+            title,           // title
+            'Tamam'                  // buttonName
+        );
+
+        navigator.notification.beep(beepsound);
+        navigator.notification.vibrate(vibratetime);
+
     },
     logout: function () {
         window.localStorage.removeItem("kuryeID");
@@ -275,7 +353,8 @@ let mypanel={
                                     '<table class="table table-bordered">'+
                                         '<tr>'+'<th>Tutar</th>'+'<td>'+v.tsmcustomerinvoices.total+' TL</td>'+'</tr>'+
                                         '<tr>'+'<th>İşlem Tipi</th>'+'<td>'+v.tsmdeliveryType.name+'</td>'+'</tr>'+
-                                        '<tr>'+'<th>Ödeme</th>'+'<td>'+paymentStatus+'</td>'+'</tr>'+
+                                        '<tr>'+'<th>Ödeme Tipi</th>'+'<td>'+v.tsmpaymentType.paymentType+'</td>'+'</tr>'+
+                                        '<tr>'+'<th>Ödeme Durumu</th>'+'<td>'+paymentStatus+'</td>'+'</tr>'+
                                         '<tr>'+'<th>Okuma Saati</th>'+'<td>'+deliverToCourierTime+'</td>'+'</tr>'+
                                         '<tr>'+'<th>Teslimat Yetkili(ler)</th>'+'<td>'+officialName+'</td>'+'</tr>'+
                                         '<tr>'+'<th>Kayıt Veren (F1):</th>'+'<td>'+v.tsmf1.name+'</td>'+'</tr>'+
@@ -504,10 +583,12 @@ let mypanel={
         });
     },
     executeonjob: function (jobID,executetype,eq) {
-
+        let courierId = window.localStorage.getItem("kuryeID");
+        let courierName = window.localStorage.getItem("kuryeName");
+        let courierHash = window.localStorage.getItem("courierHash");
         if(executetype==='pickup') {
 
-            let data = {"tsmOrderId": jobID,"courierId":window.localStorage.getItem("kuryeID"),"courierHash": window.localStorage.getItem("courierHash")};
+            let data = {"tsmOrderId": jobID,"courierId":window.localStorage.getItem("kuryeID"),"courierHash": courierHash};
 
             $.ajax({
                 url: window.localStorage.getItem("ipurl") + "/setpickedupforandroid",
@@ -518,7 +599,7 @@ let mypanel={
                     //alert("işler geliyor "+window.localStorage.getItem("ipurl")+" kuryeID:"+kuryeID);
                 },
                 error: function (a, b, c) {
-                    //alert("Hata: executejob" + a.responseText);
+                    alert("Hata: executejob" + a.responseText);
                 },
                 success: function (data) {
 
@@ -530,6 +611,10 @@ let mypanel={
                         if(data.msg!==''){
                             msg = data.msg;
                         }
+                        //alert(jobID+'|'+host+'|'+courierName+'|'+courierId+'|'+courierHash);
+
+                        socket.emit('setPickedUp',{'message':courierName+' isimli kurye <a href="/operation">' + jobID + '</a> numaralı siparişi teslim aldı!','orderId':jobID,'courierId':courierId,'courierHash':courierHash,'process':'setPickedUp','host':host});
+
                         alert("Alındı bildirisi merkeze kaydedildi!"+msg);
 
                     }else{
@@ -570,10 +655,11 @@ let mypanel={
 
                             mypanel.getjobsOnkurye(window.localStorage.getItem("kuryeID"));
                             mypanel.getdeliveredjobsOnkurye(window.localStorage.getItem("kuryeID"));
-                            alert("Alındı bildirisi merkeze kaydedildi!");
+                            socket.emit('backorderdelivered',{'message':courierName+' isimli kurye <a href="/operation">' + jobID + '</a> numaralı siparişi teslim etti!','orderId':jobID,'courierId':courierId,'courierHash':courierHash,'process':'setPickedUp','host':host});
+                            alert("Teslim bildirisi merkeze kaydedildi!");
 
                         } else {
-                            alert("Alındı bildirilirken bir hata oluştu!");
+                            alert("Teslim bildirilirken bir hata oluştu!");
                         }
 
                     }
@@ -611,6 +697,7 @@ let mypanel={
 
                             mypanel.getjobsOnkurye(window.localStorage.getItem("kuryeID"));
                             mypanel.getdeliveredjobsOnkurye(window.localStorage.getItem("kuryeID"));
+                            socket.emit('setorderDelivered',{'message':courierName+' isimli kurye <a href="/operation">' + jobID + '</a> numaralı siparişi teslim etti!','orderId':jobID,'courierId':courierId,'courierHash':courierHash,'process':'setPickedUp','host':host});
                             alert("İşlem teslim edildi!");
 
                         } else {
@@ -628,9 +715,10 @@ let mypanel={
         
     },
     getjobback: function (jobID) {
-
+        let courierId = window.localStorage.getItem("kuryeID");
+        let courierName = window.localStorage.getItem("kuryeName");
         let data = {
-            "tsmOrderId": jobID,"courierId":window.localStorage.getItem("kuryeID"),"courierHash": window.localStorage.getItem("courierHash")
+            "tsmOrderId": jobID,"courierId":courierId,"courierHash": window.localStorage.getItem("courierHash")
         };
 
         $.ajax({
@@ -648,8 +736,9 @@ let mypanel={
 
                 if (!data.hasError) {
 
-                    mypanel.getjobsOnkurye(window.localStorage.getItem("kuryeID"));
-                    mypanel.getdeliveredjobsOnkurye(window.localStorage.getItem("kuryeID"));
+                    mypanel.getjobsOnkurye(courierId);
+                    mypanel.getdeliveredjobsOnkurye(courierId);
+                    socket.emit('courierNotifier',{'message':courierName+' isimli kurye <a href="/operation">' + jobID + '</a> numaralı siparişi teslim edildiden, kurye üzerindeye geri aldı!','orderId':jobID,'courierId':courierId,'process':'courierNotifiergetbackfromdelivered','host':host});
                     alert("Teslimat geri alındı!");
 
                 } else {
@@ -818,8 +907,8 @@ let mypanel={
 
 
 mypanel.checklogin();
-//mypanel.setlocations();
-//mypanel.setlocationswithwatch();
+mypanel.setlocations();
+mypanel.setlocationswithwatch();
 
 document.addEventListener("pause", onPause, false);
 function onPause() {
